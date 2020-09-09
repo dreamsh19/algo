@@ -26,8 +26,17 @@ key	lock	result
 
 class Solution3 {
     public boolean solution(int[][] key, int[][] lock) {
-        int[][] critical = criticalLock(lock);
-
+        int[][] critical;
+        try {
+            critical = criticalLock(lock);
+        } catch (NegativeArraySizeException e) {
+            for (int i = 0; i < key.length; i++) {
+                for (int j = 0; j < key.length; j++) {
+                    if (key[i][j] == 0) return true;
+                }
+            }
+            return false;
+        }
         if (sol(key, critical)) return true;
         for (int i = 0; i < 3; i++) {
             critical = rotate(critical);
