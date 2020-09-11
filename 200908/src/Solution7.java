@@ -32,10 +32,8 @@ public class Solution7 {
 
     static final int VER = 1, HOR = 0;
     static final int[][] moves = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    static final int[][] rotates_hor = {{-1, 0}, {-1, 1}, {0, 0}, {0, 1}};
-    static final int[][] wall_hor = {{-1, 1}, {-1, 0}, {1, 1}, {1, 0}};
-    static final int[][] rotates_ver = {{0, -1}, {0, 0}, {1, -1}, {1, 0}};
-    static final int[][] wall_ver = {{1, -1}, {1, 1}, {0, -1}, {0, 1}};
+    static final int[][] rotates = {{-1, 0}, {-1, 1}, {0, 0}, {0, 1}};
+    static final int[][] wall = {{-1, 1}, {-1, 0}, {1, 1}, {1, 0}};
 
     int[][][] minDist;
     int[][] board;
@@ -86,32 +84,17 @@ public class Solution7 {
             }
         }
         int axis_rotate = 1 - axis;
-        if (axis == HOR) {
-            for (int i = 0; i < 4; i++) {
-                int x_new = x + rotates_hor[i][0];
-                int y_new = y + rotates_hor[i][1];
-                int x_wall = x + wall_hor[i][0];
-                int y_wall = y + wall_hor[i][1];
-                if (isReachable(x_new, y_new, axis_rotate) && board[x_wall][y_wall] == 0
-                        && minDist[x_new][y_new][axis_rotate] > minDist[x][y][axis] + 1) {
-                    minDist[x_new][y_new][axis_rotate] = minDist[x][y][axis] + 1;
-                    dfs(x_new, y_new, axis_rotate);
-                }
-
+        for (int i = 0; i < 4; i++) {
+            int x_new = x + rotates[i][axis];
+            int y_new = y + rotates[i][axis_rotate];
+            int x_wall = x + wall[i][axis];
+            int y_wall = y + wall[i][axis_rotate];
+            if (isReachable(x_new, y_new, axis_rotate) && board[x_wall][y_wall] == 0
+                    && minDist[x_new][y_new][axis_rotate] > minDist[x][y][axis] + 1) {
+                minDist[x_new][y_new][axis_rotate] = minDist[x][y][axis] + 1;
+                dfs(x_new, y_new, axis_rotate);
             }
-        } else {
-            for (int i = 0; i < 4; i++) {
-                int x_new = x + rotates_ver[i][0];
-                int y_new = y + rotates_ver[i][1];
-                int x_wall = x + wall_ver[i][0];
-                int y_wall = y + wall_ver[i][1];
-                if (isReachable(x_new, y_new, axis_rotate) && board[x_wall][y_wall] == 0
-                        && minDist[x_new][y_new][axis_rotate] > minDist[x][y][axis] + 1) {
-                    minDist[x_new][y_new][axis_rotate] = minDist[x][y][axis] + 1;
-                    dfs(x_new, y_new, axis_rotate);
-                }
 
-            }
         }
 
     }
