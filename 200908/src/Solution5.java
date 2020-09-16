@@ -37,18 +37,21 @@ words	queries	result
  */
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 class Solution5 {
 
     HashMap<Integer, Node> db;
     HashMap<Integer, Node> db_reverse;
+    static final int PREFIX = 0;
+    static final int POSTFIX = 1;
+    static final int BOTH = 2;
 
     class Node {
         int size;
         HashMap<Character, Node> dict;
 
         Node() {
+            size = 0;
             dict = new HashMap<Character, Node>();
         }
 
@@ -61,26 +64,23 @@ class Solution5 {
         }
     }
 
-    int startIdx(String q) {
-        boolean isPrefix = q.charAt(0) == '?';
-        if (isPrefix) {
-            int i;
-            for (i = 0; i < q.length(); i++) {
-                if (q.charAt(i) != '?') break;
+    int queryType(String q) {
+        if (q.charAt(0) == '?') {
+            if (q.charAt(q.length() - 1) == '?') {
+                return BOTH;
+            } else {
+                return PREFIX;
             }
-            return i;
         } else {
-            int i;
-            for (i = q.length() - 1; i >= 0; i--) {
-                if (q.charAt(i) != '?') break;
-            }
-            return i - q.length();
+            return POSTFIX;
         }
     }
 
-    void addToDB(String word) {
+    void addToDB(String word, boolean isReverse) {
         int len = word.length();
-        Node preNode = db.getOrDefault(len, new Node());
+        HashMap<Integer, Node> db_ = isReverse ? db_reverse : db;
+
+        Node preNode = db_.getOrDefault(len, new Node());
         for (int i = 0; i < len; i++) {
             preNode.size++;
 
@@ -92,27 +92,7 @@ class Solution5 {
 
             preNode.dict = preDict;
 
-            if (i == 0) db.put(len, preNode);
-            preNode = thisNode;
-        }
-
-    }
-
-    void addToDB1(String word) {
-        int len = word.length();
-        Node preNode = db_reverse.getOrDefault(len, new Node());
-        for (int i = 0; i < len; i++) {
-            preNode.size++;
-
-            HashMap<Character, Node> preDict = preNode.dict;
-            char c = word.charAt(i);
-            Node thisNode = preDict.getOrDefault(c, new Node());
-
-            preDict.put(c, thisNode);
-
-            preNode.dict = preDict;
-
-            if (i == 0) db_reverse.put(len, preNode);
+            if (i == 0) db_.put(len, preNode);
             preNode = thisNode;
         }
 
@@ -123,39 +103,24 @@ class Solution5 {
     }
 
     int getCount(String q) {
-        int startIdx = startIdx(q);
-        int q_len = q.length();
-        Node db_len = startIdx > 0 ? db_reverse.get(q_len) : db.get(q_len);
-        if (db_len == null) return 0;
-        if (startIdx == q_len) { // hasOnly ?
-            return db_len.size;
-        } else if (startIdx > 0) { // prefix
-            try {
-                q = reverse(q);
-                startIdx = startIdx(q);
-                int endIdx = q.length() + startIdx + 1;
-                Node thisNode = db_len;
-                for (int i = 0; i < endIdx; i++) {
-                    char c = q.charAt(i);
-                    thisNode = thisNode.dict.get(c);
-                }
-                return thisNode.size;
-            } catch (NullPointerException e) {
-                return 0;
-            }
-        } else {//postfix
-            int endIdx = q.length() + startIdx + 1;
+        int qType = queryType(q);
+        int qLen = q.length();
+        try {
+            if (qType == BOTH) return db.get(qLen).size;
+
+            Node db_len = qType == POSTFIX ? db.get(qLen) : db_reverse.get(qLen);
+            q = qType == POSTFIX ? q : reverse(q);
             Node thisNode = db_len;
-            try {
-                for (int i = 0; i < endIdx; i++) {
-                    char c = q.charAt(i);
-                    thisNode = thisNode.dict.get(c);
-                }
-                return thisNode.size;
-            } catch (NullPointerException e) {
-                return 0;
+            int i = 0;
+            char c;
+            while ((c = q.charAt(i++)) != '?') {
+                thisNode = thisNode.dict.get(c);
             }
+            return thisNode.size;
+        } catch (NullPointerException e) {
+            return 0;
         }
+
     }
 
 
@@ -166,10 +131,9 @@ class Solution5 {
         db_reverse = new HashMap<Integer, Node>();
 
         for (String word : words) {
-            addToDB(word);
-            addToDB1(reverse(word));
+            addToDB(word, false);
+            addToDB(reverse(word), true);
         }
-//        System.out.println(db_reverse);
         for (String q : queries) {
             answer[ans_idx++] = getCount(q);
         }
