@@ -41,7 +41,25 @@ import java.util.LinkedList;
 
 class Solution5 {
 
-    HashMap<Integer, LinkedList<String>> db;
+    HashMap<Integer, Node> db;
+    HashMap<Integer, Node> db_reverse;
+
+    class Node {
+        int size;
+        HashMap<Character, Node> dict;
+
+        Node() {
+            dict = new HashMap<Character, Node>();
+        }
+
+        @Override
+        public String toString() {
+            return "\nNode{" +
+                    "size=" + size +
+                    ", dict=" + dict +
+                    "}";
+        }
+    }
 
     int startIdx(String q) {
         boolean isPrefix = q.charAt(0) == '?';
@@ -60,46 +78,100 @@ class Solution5 {
         }
     }
 
+    void addToDB(String word) {
+        int len = word.length();
+        Node preNode = db.getOrDefault(len, new Node());
+        for (int i = 0; i < len; i++) {
+            preNode.size++;
+
+            HashMap<Character, Node> preDict = preNode.dict;
+            char c = word.charAt(i);
+            Node thisNode = preDict.getOrDefault(c, new Node());
+
+            preDict.put(c, thisNode);
+
+            preNode.dict = preDict;
+
+            if (i == 0) db.put(len, preNode);
+            preNode = thisNode;
+        }
+
+    }
+
+    void addToDB1(String word) {
+        int len = word.length();
+        Node preNode = db_reverse.getOrDefault(len, new Node());
+        for (int i = 0; i < len; i++) {
+            preNode.size++;
+
+            HashMap<Character, Node> preDict = preNode.dict;
+            char c = word.charAt(i);
+            Node thisNode = preDict.getOrDefault(c, new Node());
+
+            preDict.put(c, thisNode);
+
+            preNode.dict = preDict;
+
+            if (i == 0) db_reverse.put(len, preNode);
+            preNode = thisNode;
+        }
+
+    }
+
+    String reverse(String s) {
+        return new StringBuilder(s).reverse().toString();
+    }
+
+    int getCount(String q) {
+        int startIdx = startIdx(q);
+        int q_len = q.length();
+        Node db_len = startIdx > 0 ? db_reverse.get(q_len) : db.get(q_len);
+        if (db_len == null) return 0;
+        if (startIdx == q_len) { // hasOnly ?
+            return db_len.size;
+        } else if (startIdx > 0) { // prefix
+            try {
+                q = reverse(q);
+                startIdx = startIdx(q);
+                int endIdx = q.length() + startIdx + 1;
+                Node thisNode = db_len;
+                for (int i = 0; i < endIdx; i++) {
+                    char c = q.charAt(i);
+                    thisNode = thisNode.dict.get(c);
+                }
+                return thisNode.size;
+            } catch (NullPointerException e) {
+                return 0;
+            }
+        } else {//postfix
+            int endIdx = q.length() + startIdx + 1;
+            Node thisNode = db_len;
+            try {
+                for (int i = 0; i < endIdx; i++) {
+                    char c = q.charAt(i);
+                    thisNode = thisNode.dict.get(c);
+                }
+                return thisNode.size;
+            } catch (NullPointerException e) {
+                return 0;
+            }
+        }
+    }
+
+
     public int[] solution(String[] words, String[] queries) {
         int[] answer = new int[queries.length];
         int ans_idx = 0;
-        db = new HashMap<Integer, LinkedList<String>>();
+        db = new HashMap<Integer, Node>();
+        db_reverse = new HashMap<Integer, Node>();
 
         for (String word : words) {
-            int len = word.length();
-            LinkedList<String> tmp;
-            tmp = db.getOrDefault(len, new LinkedList<String>());
-            tmp.add(word);
-            db.put(len, tmp);
+            addToDB(word);
+            addToDB1(reverse(word));
         }
+//        System.out.println(db_reverse);
         for (String q : queries) {
-            int startIdx = startIdx(q);
-            int q_len = q.length();
-            LinkedList<String> tmp = db.get(q_len);
-            if (tmp == null) {
-                answer[ans_idx++] = 0;
-                continue;
-            }
-            if (startIdx == q_len) { // hasOnly ?
-                answer[ans_idx++] = tmp.size();
-            } else if (startIdx > 0) { // prefix
-                int cnt = 0;
-                String subQ = q.substring(startIdx);
-                for (String w : tmp) {
-                    if (w.substring(startIdx).equals(subQ)) cnt++;
-                }
-                answer[ans_idx++] = cnt;
-
-            } else { //postfix
-                int cnt = 0;
-                int endIdx = q.length() + startIdx + 1;
-                String subQ = q.substring(0, endIdx);
-                for (String w : tmp) {
-                    if (w.substring(0, endIdx).equals(subQ)) cnt++;
-                }
-                answer[ans_idx++] = cnt;
-            }
-
+            answer[ans_idx++] = getCount(q);
         }
 
 
@@ -108,7 +180,7 @@ class Solution5 {
 
     public static void main(String[] args) {
         String[] words = {"frodo", "front", "frost", "frozen", "frame", "kakao"};
-        String[] queries = {"fro??", "????o", "fr???", "fro???", "pro?", "?????","??????"};
+        String[] queries = {"fro??", "????o", "fr???", "fro???", "pro??", "?????", "??????"};
         Solution5 sol = new Solution5();
         int[] ans = sol.solution(words, queries);
         String s = "";
