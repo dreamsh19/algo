@@ -42,9 +42,6 @@ class Solution5 {
 
     HashMap<Integer, Node> db;
     HashMap<Integer, Node> db_reverse;
-    static final int PREFIX = 0;
-    static final int POSTFIX = 1;
-    static final int BOTH = 2;
 
     class Node {
         int size;
@@ -53,6 +50,29 @@ class Solution5 {
         Node() {
             size = 0;
             dict = new HashMap<Character, Node>();
+        }
+
+        void addString(String s) {
+            Node thisNode = this;
+            for (char c : s.toCharArray()) {
+                thisNode.size++;
+                thisNode.dict.putIfAbsent(c, new Node());
+                thisNode = thisNode.dict.get(c);
+            }
+        }
+
+        int getCount(String s) {
+            try {
+                Node node = this;
+                int i = 0;
+                char c;
+                while ((c = s.charAt(i++)) != '?') {
+                    node = node.dict.get(c);
+                }
+                return node.size;
+            } catch (NullPointerException e) {
+                return 0;
+            }
         }
 
         @Override
@@ -64,37 +84,13 @@ class Solution5 {
         }
     }
 
-    int queryType(String q) {
-        if (q.charAt(0) == '?') {
-            if (q.charAt(q.length() - 1) == '?') {
-                return BOTH;
-            } else {
-                return PREFIX;
-            }
-        } else {
-            return POSTFIX;
-        }
-    }
-
     void addToDB(String word, boolean isReverse) {
         int len = word.length();
         HashMap<Integer, Node> db_ = isReverse ? db_reverse : db;
 
-        Node preNode = db_.getOrDefault(len, new Node());
-        for (int i = 0; i < len; i++) {
-            preNode.size++;
-
-            HashMap<Character, Node> preDict = preNode.dict;
-            char c = word.charAt(i);
-            Node thisNode = preDict.getOrDefault(c, new Node());
-
-            preDict.put(c, thisNode);
-
-            preNode.dict = preDict;
-
-            if (i == 0) db_.put(len, preNode);
-            preNode = thisNode;
-        }
+        db_.putIfAbsent(len, new Node());
+        Node node = db_.get(len);
+        node.addString(word);
 
     }
 
@@ -103,26 +99,13 @@ class Solution5 {
     }
 
     int getCount(String q) {
-        int qType = queryType(q);
+        boolean isPostfix = q.endsWith("?");
         int qLen = q.length();
-        try {
-            if (qType == BOTH) return db.get(qLen).size;
 
-            Node db_len = qType == POSTFIX ? db.get(qLen) : db_reverse.get(qLen);
-            q = qType == POSTFIX ? q : reverse(q);
-            Node thisNode = db_len;
-            int i = 0;
-            char c;
-            while ((c = q.charAt(i++)) != '?') {
-                thisNode = thisNode.dict.get(c);
-            }
-            return thisNode.size;
-        } catch (NullPointerException e) {
-            return 0;
-        }
-
+        Node db_len = isPostfix ? db.get(qLen) : db_reverse.get(qLen);
+        q = isPostfix ? q : reverse(q);
+        return db_len == null ? 0 : db_len.getCount(q);
     }
-
 
     public int[] solution(String[] words, String[] queries) {
         int[] answer = new int[queries.length];
@@ -138,13 +121,12 @@ class Solution5 {
             answer[ans_idx++] = getCount(q);
         }
 
-
         return answer;
     }
 
     public static void main(String[] args) {
         String[] words = {"frodo", "front", "frost", "frozen", "frame", "kakao"};
-        String[] queries = {"fro??", "????o", "fr???", "fro???", "pro??", "?????", "??????"};
+        String[] queries = {"fro??", "????o", "fr???", "fro???", "pro?", "?????", "??????"};
         Solution5 sol = new Solution5();
         int[] ans = sol.solution(words, queries);
         String s = "";
