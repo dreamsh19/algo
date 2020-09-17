@@ -43,30 +43,23 @@ n	weak	dist	result
 7m를 이동할 수 있는 친구가 4m 지점에서 출발해 반시계 방향으로 점검을 돌면 모든 취약 지점을 점검할 수 있습니다. 따라서 친구를 최소 한 명 투입하면 됩니다.
  */
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.ArrayList;
 
 class Solution6 {
     int numPoints;
+    int[] diff;
     HashSet<ArrayList<Integer>> permutations;
 
-    int next(int i) {
-        return (i + 1) % numPoints;
-    }
-
-    int prev(int i) {
-        return i == 0 ? numPoints - 1 : i - 1;
-    }
-
-    int count(int[] diff, int worker, int from) {
+    int nextIdx(int worker, int from) {
         int sum = 0;
-        int idx = from;
-        int cnt = 0;
-        while (sum <= worker) {
-            sum += diff[idx];
-            idx = next(idx);
-            cnt++;
+        int i;
+        for (i = from; i < numPoints; i++) {
+            sum += diff[i];
+            if (sum > worker) return i + 1;
         }
-        return cnt;
+        return numPoints;
     }
 
 
@@ -82,42 +75,45 @@ class Solution6 {
         }
     }
 
+    void shift(int[] arr) {
+        int tmp = arr[0];
+        int i;
+        for (i = 0; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        arr[i] = tmp;
+    }
+
     public int solution(int n, int[] weak, int[] dist) {
         numPoints = weak.length;
-        Arrays.sort(dist);
-        ArrayList<Integer> dist_ = new ArrayList<>();
-        for (int i = dist.length - 1; i >= 0; i--) {
-            dist_.add(dist[i]);
+        ArrayList<Integer> totalWorkers = new ArrayList<>();
+        for (int d : dist) {
+            totalWorkers.add(d);
         }
-        int[] diff = new int[weak.length];
+        Collections.sort(totalWorkers, Collections.reverseOrder());
 
-        for (int i = 0; i < weak.length - 1; i++) {
+        diff = new int[numPoints];
+
+        for (int i = 0; i < numPoints - 1; i++) {
             diff[i] = weak[i + 1] - weak[i];
         }
-        diff[weak.length - 1] = n + weak[0] - weak[weak.length - 1];
-        ArrayList<Integer> d = new ArrayList<>();
+        diff[numPoints - 1] = n + weak[0] - weak[numPoints - 1];
+
+        ArrayList<Integer> workingList = new ArrayList<>();
         for (int workerNum = 0; workerNum < dist.length; workerNum++) {
-//            System.out.println(workerNum);
-
-            d.add(dist_.get(workerNum));
-
+            workingList.add(totalWorkers.get(workerNum));
             permutations = new HashSet<>();
-            permute(d, 0, workerNum);
-//            System.out.println(permutations);
-
-            for (int startIdx = 0; startIdx < weak.length; startIdx++) {
+            permute(workingList, 0, workerNum);
+            for (int shiftCount = 0; shiftCount < numPoints; shiftCount++) {
                 for (ArrayList<Integer> workers : permutations) {
-                    int idx = startIdx;
-                    int count = 0;
+                    int idx = 0;
                     for (int worker : workers) {
-                        int cnt = count(diff, worker, idx);
-                        count += cnt;
-                        idx = (idx + cnt) % numPoints;
-                        if (count >= weak.length) return workerNum + 1;
+                        idx = nextIdx(worker, idx);
+                        if (idx == numPoints) return workerNum + 1;
                     }
 
                 }
-
+                shift(diff);
             }
         }
 
