@@ -43,16 +43,37 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution4
-        T = 1;
-        int[][] prices = {{1, 2, 3, 2, 3}};
-        Solution4 sol = new Solution4();
+//        // Solution4
+//        T = 1;
+//        int[][] prices = {{1, 2, 3, 2, 3}};
+//        Solution4 sol = new Solution4();
+//        for (int i = 0; i < T; i++) {
+//            int[] ans = sol.solution(prices[i]);
+//            printIntArray(ans);
+//        }
+
+//        // Solution5
+//        T = 1;
+//        String[][] genres = {{"classic", "pop", "classic", "classic", "pop"}};
+//        int[][] plays = {{500, 600, 150, 800, 2500}};
+//        Solution5 sol = new Solution5();
+//        for (int i = 0; i < T; i++) {
+//            int[] ans = sol.solution(genres[i], plays[i]);
+//            printIntArray(ans);
+//        }
+
+        // Solution6
+        T = 2;
+        String[][][] clothes = {{{"yellow_hat", "headgear"}, {"blue_sunglasses", "eyewear"}, {"green_turban", "headgear"}},
+                {{"crow_mask", "face"}, {"blue_sunglasses", "face"}, {"smoky_makeup", "face"}}};
+        Solution6 sol = new Solution6();
         for (int i = 0; i < T; i++) {
-            int[] ans = sol.solution(prices[i]);
-            printIntArray(ans);
+            int ans = sol.solution(clothes[i]);
+            System.out.println(ans);
         }
-
-
     }
 
+
 }
+
+
