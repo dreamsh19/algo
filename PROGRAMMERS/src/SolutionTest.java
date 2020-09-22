@@ -32,16 +32,27 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution3
-        T = 3;
-        int[] bridge_lengths = {2,100,100};
-        int[] weights = {10,100,100};
-        int[][] truck_weights ={{7,4,5,6},{10},{10,10,10,10,10,10,10,10,10,10}};
-        Solution3 sol = new Solution3();
+//        // Solution3
+//        T = 3;
+//        int[] bridge_lengths = {2,100,100};
+//        int[] weights = {10,100,100};
+//        int[][] truck_weights ={{7,4,5,6},{10},{10,10,10,10,10,10,10,10,10,10}};
+//        Solution3 sol = new Solution3();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(bridge_lengths[i], weights[i],truck_weights[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution4
+        T = 1;
+        int[][] prices = {{1, 2, 3, 2, 3}};
+        Solution4 sol = new Solution4();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(bridge_lengths[i], weights[i],truck_weights[i]);
-            System.out.println(ans);
+            int[] ans = sol.solution(prices[i]);
+            printIntArray(ans);
         }
+
+
     }
 
 }
