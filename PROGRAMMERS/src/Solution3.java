@@ -1,28 +1,60 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Solution3 {
+    class Truck {
+
+        int weight;
+        int position;
+
+        Truck(int w, int p) {
+            this.weight = w;
+            this.position = p;
+        }
+
+        void goForward() {
+            position++;
+        }
+
+        @Override
+        public String toString() {
+            return "Truck{" +
+                    "weight=" + weight +
+                    ", position=" + position +
+                    '}';
+        }
+    }
+
     public int solution(int bridge_length, int weight, int[] truck_weights) {
 
-        int nextTruck = 0;
-        int weightLeft = weight;
-        int time;
+        int time = 1;
         int truckFinished = 0;
-        int[] onBridge = new int[bridge_length + 1];
-        for (time = 0; truckFinished < truck_weights.length; time++) {
-            for (int i = onBridge.length - 2; i >= 0; i--) {
-                onBridge[i + 1] = onBridge[i];
+        Queue<Truck> onBridge = new LinkedList<>();
+        Queue<Truck> waiting = new LinkedList<>();
+        for (int w : truck_weights) {
+            waiting.offer(new Truck(w, 0));
+        }
+
+        Truck first = waiting.poll();
+        onBridge.offer(first);
+        int weightLeft = weight - first.weight;
+
+        while (truckFinished < truck_weights.length) {
+            for (Truck t : onBridge) {
+                t.goForward();
             }
-            if (onBridge[bridge_length] > 0) {
-                weightLeft += onBridge[bridge_length];
+            if (onBridge.peek().position >= bridge_length) {
+                Truck finish = onBridge.poll();
+                weightLeft += finish.weight;
                 truckFinished++;
             }
-            if (nextTruck < truck_weights.length && weightLeft >= truck_weights[nextTruck]) {
-                weightLeft -= truck_weights[nextTruck];
-                onBridge[0] = truck_weights[nextTruck++];
-            } else {
-                onBridge[0] = 0;
-            }
 
+            if (!waiting.isEmpty() && weightLeft >= waiting.peek().weight) {
+                Truck start = waiting.poll();
+                weightLeft -= start.weight;
+                onBridge.offer(start);
+            }
+            time++;
         }
 
         return time;
