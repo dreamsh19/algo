@@ -73,10 +73,11 @@ public class SolutionTest {
 //        }
 
         // Solution7
-        T = 2;
+        T = 3;
         int[][] arrows = {
                 {6, 6, 6, 4, 4, 4, 2, 2, 2, 0, 0, 0, 1, 6, 5, 5, 3, 6, 0},
-                {0, 4}
+                {0, 4},
+                {0, 2, 4, 6, 0, 2, 4, 6}
         };
         Solution7 sol = new Solution7();
         for (int i = 0; i < T; i++) {
