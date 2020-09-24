@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 
 public class Solution8 {
@@ -5,14 +6,18 @@ public class Solution8 {
 
     public int solution(int[] scoville, int K) {
         pq = new PriorityQueue<>();
-        for (int scov : scoville) pq.offer(scov);
+        for (int scov : scoville) pq.add(scov);
         int answer = 0;
+        int first, second, toAdd;
         while (pq.peek() < K) {
-            if (pq.size() == 1) return -1;
-            int first = pq.poll();
-            int second = pq.poll();
-            int toAdd = first + second * 2;
-            pq.offer(toAdd);
+            try {
+                first = pq.remove();
+                second = pq.remove();
+            } catch (NoSuchElementException e) {
+                return -1;
+            }
+            toAdd = first + second * 2;
+            pq.add(toAdd);
             answer++;
         }
         return answer;
