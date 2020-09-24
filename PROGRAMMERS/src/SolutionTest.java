@@ -62,15 +62,29 @@ public class SolutionTest {
 //            printIntArray(ans);
 //        }
 
-        // Solution6
+//        // Solution6
+//        T = 2;
+//        String[][][] clothes = {{{"yellow_hat", "headgear"}, {"blue_sunglasses", "eyewear"}, {"green_turban", "headgear"}},
+//                {{"crow_mask", "face"}, {"blue_sunglasses", "face"}, {"smoky_makeup", "face"}}};
+//        Solution6 sol = new Solution6();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(clothes[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution7
         T = 2;
-        String[][][] clothes = {{{"yellow_hat", "headgear"}, {"blue_sunglasses", "eyewear"}, {"green_turban", "headgear"}},
-                {{"crow_mask", "face"}, {"blue_sunglasses", "face"}, {"smoky_makeup", "face"}}};
-        Solution6 sol = new Solution6();
+        int[][] arrows = {
+                {6, 6, 6, 4, 4, 4, 2, 2, 2, 0, 0, 0, 1, 6, 5, 5, 3, 6, 0},
+                {0, 4}
+        };
+        Solution7 sol = new Solution7();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(clothes[i]);
+            int ans = sol.solution(arrows[i]);
             System.out.println(ans);
         }
+
+
     }
 
 
