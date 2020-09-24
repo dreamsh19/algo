@@ -85,17 +85,27 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution8
-        T = 2;
-        int[][] scovilles = {
-                {1, 2, 3, 9, 10, 12},
-                {1, 1},
-        };
-        int[] K = {7, 7};
-        Solution8 sol = new Solution8();
+//        // Solution8
+//        T = 2;
+//        int[][] scovilles = {
+//                {1, 2, 3, 9, 10, 12},
+//                {1, 1},
+//        };
+//        int[] K = {7, 7};
+//        Solution8 sol = new Solution8();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(scovilles[i], K[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution9
+        T = 1;
+        int[][] array = {{1, 5, 2, 6, 3, 7, 4}};
+        int[][][] commands = {{{2, 5, 3}, {4, 4, 1}, {1, 7, 3}}};
+        Solution9 sol = new Solution9();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(scovilles[i], K[i]);
-            System.out.println(ans);
+            int[] ans = sol.solution(array[i], commands[i]);
+            printIntArray(ans);
         }
     }
 
