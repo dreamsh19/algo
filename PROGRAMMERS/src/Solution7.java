@@ -1,21 +1,40 @@
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 
 public class Solution7 {
 
     HashSet<Point> visited;
-    HashSet<HashSet<Point>> visitedEdge;
+    HashSet<Edge> visitedEdge;
+
+    class Edge {
+        HashSet<Point> points;
+
+        Edge(Point p1, Point p2) {
+            points = new HashSet<>(Arrays.asList(new Point[]{p1, p2}));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Edge edge = (Edge) o;
+            return Objects.equals(points, edge.points);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(points);
+        }
+    }
 
     class Point {
         int x;
         int y;
-        HashSet<Point> parents;
 
         Point(int x, int y) {
             this.x = x;
             this.y = y;
-            this.parents = new HashSet<>();
         }
 
         Point movePoint(int dir) {
@@ -43,8 +62,7 @@ public class Solution7 {
             return "Point{" +
                     "x=" + x +
                     ", y=" + y +
-//                    ", parent=" + parent +
-                    '}';
+-                    '}';
         }
     }
 
@@ -52,14 +70,13 @@ public class Solution7 {
         int ans = 0;
         visited = new HashSet<>();
         visitedEdge = new HashSet<>();
+
         Point cur = new Point(0, 0);
         for (int arrow : arrows) {
             for (int r = 0; r < 2; r++) {
                 visited.add(cur);
                 Point next = cur.movePoint(arrow);
-                HashSet<Point> edge = new HashSet<>();
-                edge.add(cur);
-                edge.add(next);
+                Edge edge = new Edge(cur, next);
                 if (visited.contains(next) && !visitedEdge.contains(edge)) {
                     ans++;
                 }
