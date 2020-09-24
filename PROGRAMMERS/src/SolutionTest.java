@@ -98,14 +98,23 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution9
+//        // Solution9
+//        T = 1;
+//        int[][] array = {{1, 5, 2, 6, 3, 7, 4}};
+//        int[][][] commands = {{{2, 5, 3}, {4, 4, 1}, {1, 7, 3}}};
+//        Solution9 sol = new Solution9();
+//        for (int i = 0; i < T; i++) {
+//            int[] ans = sol.solution(array[i], commands[i]);
+//            printIntArray(ans);
+//        }
+
+        // Solution10
         T = 1;
-        int[][] array = {{1, 5, 2, 6, 3, 7, 4}};
-        int[][][] commands = {{{2, 5, 3}, {4, 4, 1}, {1, 7, 3}}};
-        Solution9 sol = new Solution9();
+        int[][][] routes = {{{-20,15}, {-14,-5}, {-18,-13}, {-5,-3}}};
+        Solution10 sol = new Solution10();
         for (int i = 0; i < T; i++) {
-            int[] ans = sol.solution(array[i], commands[i]);
-            printIntArray(ans);
+            int ans = sol.solution(routes[i]);
+            System.out.println(ans);
         }
     }
 
