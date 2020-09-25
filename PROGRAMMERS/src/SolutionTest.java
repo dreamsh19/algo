@@ -144,12 +144,22 @@ public class SolutionTest {
 //            printIntArray(ans);
 //        }
 
-        // Solution13
-        T = 1;
-        int[][][] triangles = {{{7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}}};
-        Solution14 sol = new Solution14();
+//        // Solution14
+//        T = 1;
+//        int[][][] triangles = {{{7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}}};
+//        Solution14 sol = new Solution14();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(triangles[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution15
+        T = 3;
+        String[] numbers = {"1924", "1231234", "4177252841"};
+        int[] k = {2, 3, 4};
+        Solution15 sol = new Solution15();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(triangles[i]);
+            String ans = sol.solution(numbers[i], k[i]);
             System.out.println(ans);
         }
 
