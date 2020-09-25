@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+
 public class Solution14 {
 
-    int maxSum(int[][] triangle, int floor, int idx) {
-        if (floor == triangle.length-1) return triangle[floor][idx];
-        return triangle[floor][idx] + Math.max(maxSum(triangle, floor + 1, idx), maxSum(triangle, floor + 1, idx + 1));
-    }
-
     public int solution(int[][] triangle) {
-        return maxSum(triangle, 0, 0);
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i <= triangle.length; i++) ans.add(0);
+        for (int floor = triangle.length - 1; floor >= 0; floor--) {
+            ArrayList<Integer> tmp = new ArrayList<>();
+            for (int i = 0; i < triangle[floor].length; i++) {
+                tmp.add(triangle[floor][i] + Math.max(ans.get(i), ans.get(i + 1)));
+            }
+            ans = tmp;
+        }
+        return ans.get(0);
     }
 }
