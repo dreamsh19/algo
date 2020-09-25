@@ -126,14 +126,25 @@ public class SolutionTest {
 //            printIntArray(ans);
 //        }
 
-        // Solution12
-        T = 1;
-        int[][] citations = {{3,0,6,1,5}};
-        Solution12 sol = new Solution12();
+//        // Solution12
+//        T = 1;
+//        int[][] citations = {{3,0,6,1,5}};
+//        Solution12 sol = new Solution12();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(citations[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution13
+        T = 2;
+        String[][] operations = {{"I 16", "D 1"}, {"I 7", "I 5", "I -5", "D -1"}};
+        Solution13 sol = new Solution13();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(citations[i]);
-            System.out.println(ans);
+            int[] ans = sol.solution(operations[i]);
+            printIntArray(ans);
         }
+
+
     }
 
 
