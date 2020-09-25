@@ -135,13 +135,22 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
+//        // Solution13
+//        T = 2;
+//        String[][] operations = {{"I 16", "D 1"}, {"I 7", "I 5", "I -5", "D -1"}};
+//        Solution13 sol = new Solution13();
+//        for (int i = 0; i < T; i++) {
+//            int[] ans = sol.solution(operations[i]);
+//            printIntArray(ans);
+//        }
+
         // Solution13
-        T = 2;
-        String[][] operations = {{"I 16", "D 1"}, {"I 7", "I 5", "I -5", "D -1"}};
-        Solution13 sol = new Solution13();
+        T = 1;
+        int[][][] triangles = {{{7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}}};
+        Solution14 sol = new Solution14();
         for (int i = 0; i < T; i++) {
-            int[] ans = sol.solution(operations[i]);
-            printIntArray(ans);
+            int ans = sol.solution(triangles[i]);
+            System.out.println(ans);
         }
 
 
