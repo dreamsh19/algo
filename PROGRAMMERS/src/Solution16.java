@@ -1,39 +1,29 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Solution16 {
 
-    boolean isPrintable(Queue<Integer> q) {
-        int max = 0;
-        for (int e : q) {
-            max = Math.max(max, e);
-        }
-        return q.peek() == max;
-    }
-
     public int solution(int[] priorities, int location) {
         int answer = 1;
         Queue<Integer> q = new LinkedList<>();
         for (int p : priorities) q.offer(p);
+        Arrays.sort(priorities);
+        int maxIdx = priorities.length - 1;
 
         while (true) {
-            if (location == 0) {
-                if (isPrintable(q)) {
-                    q.poll();
+            int poll = q.poll();
+            if (poll == priorities[maxIdx]) {
+                if (location == 0) {
                     return answer;
                 } else {
-                    q.offer(q.poll());
-                    location = q.size() - 1;
+                    maxIdx--;
+                    answer++;
+                    location--;
                 }
             } else {
-                if (isPrintable(q)) {
-                    q.poll();
-                    answer++;
-                } else {
-                    q.offer(q.poll());
-                }
-                location--;
-
+                q.offer(poll);
+                location = location == 0 ? q.size() - 1 : location - 1;
             }
         }
 
