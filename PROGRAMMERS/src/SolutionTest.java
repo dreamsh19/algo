@@ -117,13 +117,22 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution11
-        T = 2;
-        int[][] answers = {{1, 2, 3, 4, 5}, {1, 3, 2, 4, 2}};
-        Solution11 sol = new Solution11();
+//        // Solution11
+//        T = 2;
+//        int[][] answers = {{1, 2, 3, 4, 5}, {1, 3, 2, 4, 2}};
+//        Solution11 sol = new Solution11();
+//        for (int i = 0; i < T; i++) {
+//            int[] ans = sol.solution(answers[i]);
+//            printIntArray(ans);
+//        }
+
+        // Solution12
+        T = 1;
+        int[][] citations = {{3,0,6,1,5}};
+        Solution12 sol = new Solution12();
         for (int i = 0; i < T; i++) {
-            int[] ans = sol.solution(answers[i]);
-            printIntArray(ans);
+            int ans = sol.solution(citations[i]);
+            System.out.println(ans);
         }
     }
 
