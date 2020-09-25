@@ -1,25 +1,30 @@
-public class Solution15 {
-    public String solution(String number, int k) {
-        if (k == 0) return number;
-        if (number.length() <= k) return "";
+import java.util.Stack;
 
-        char[] numArr = number.toCharArray();
-        int maxIdx = 0;
-        char max = '0';
-        for (int i = 0; i <= k; i++) {
-            if (numArr[i] == '9') {
-                maxIdx = i;
-                break;
+public class Solution15 {
+
+    public String solution(String number, int k) {
+        Stack<Character> st = new Stack<>();
+
+        int l = number.length();
+        int ans_len = l - k;
+
+        for (char c : number.toCharArray()) {
+            while (!st.isEmpty() && c > st.peek() && k > 0) {
+                st.pop();
+                k--;
             }
-            if (numArr[i] > max) {
-                max = numArr[i];
-                maxIdx = i;
-            }
+            st.push(c);
         }
-        if (maxIdx == 0) {
-            return numArr[0] + solution(number.substring(1), k);
-        } else {
-            return numArr[maxIdx] + solution(number.substring(maxIdx + 1), k - maxIdx);
+
+        char[] answer = new char[ans_len];
+        int idx = ans_len - 1;
+        while (st.size() > ans_len) {
+            st.pop();
         }
+        while (!st.isEmpty()) {
+            answer[idx--] = st.pop();
+        }
+
+        return new String(answer);
     }
 }
