@@ -153,16 +153,25 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution15
-        T = 3;
-        String[] numbers = {"1924", "1231234", "4177252841"};
-        int[] k = {2, 3, 4};
-        Solution15 sol = new Solution15();
+//        // Solution15
+//        T = 3;
+//        String[] numbers = {"1924", "1231234", "4177252841"};
+//        int[] k = {2, 3, 4};
+//        Solution15 sol = new Solution15();
+//        for (int i = 0; i < T; i++) {
+//            String ans = sol.solution(numbers[i], k[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution16
+        T = 2;
+        int[][] priorities = {{2, 1, 3, 2},{1, 1, 9, 1, 1, 1}}	;
+        int[] location = {2, 0};
+        Solution16 sol = new Solution16();
         for (int i = 0; i < T; i++) {
-            String ans = sol.solution(numbers[i], k[i]);
+            int ans = sol.solution(priorities[i],location[i]);
             System.out.println(ans);
         }
-
 
     }
 
