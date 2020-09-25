@@ -108,13 +108,22 @@ public class SolutionTest {
 //            printIntArray(ans);
 //        }
 
-        // Solution10
-        T = 1;
-        int[][][] routes = {{{-20,15}, {-14,-5}, {-18,-13}, {-5,-3}}};
-        Solution10 sol = new Solution10();
+//        // Solution10
+//        T = 1;
+//        int[][][] routes = {{{-20,15}, {-14,-5}, {-18,-13}, {-5,-3}}};
+//        Solution10 sol = new Solution10();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(routes[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution11
+        T = 2;
+        int[][] answers = {{1, 2, 3, 4, 5}, {1, 3, 2, 4, 2}};
+        Solution11 sol = new Solution11();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(routes[i]);
-            System.out.println(ans);
+            int[] ans = sol.solution(answers[i]);
+            printIntArray(ans);
         }
     }
 
