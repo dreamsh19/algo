@@ -4,31 +4,20 @@ import java.util.PriorityQueue;
 public class Solution17 {
     LinkedList<Integer>[] adjList;
     int[] dist;
-    boolean[] visited;
-
-    void dfs(int start) {
-        visited[start] = true;
-        for (int adj : adjList[start]) {
-            if (!visited[adj] && dist[start] + 1 < dist[adj]) {
-                dist[adj] = dist[start] + 1;
-                dfs(adj);
-            }
-        }
-        visited[start] = false;
-    }
+    boolean[] inSPT; // is included in shortest path tree
 
     public int solution(int n, int[][] edge) {
         int answer = 0;
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> dist[o1] - dist[o2]);
 
         adjList = new LinkedList[n + 1];
         dist = new int[n + 1];
-        visited = new boolean[n + 1];
+        inSPT = new boolean[n + 1];
 
         for (int i = 1; i <= n; i++) {
             adjList[i] = new LinkedList();
             dist[i] = Integer.MAX_VALUE;
-            visited[i] = false;
+            inSPT[i] = false;
         }
         for (int[] e : edge) {
             int a = e[0];
@@ -37,14 +26,28 @@ public class Solution17 {
             adjList[b].add(a);
         }
         dist[1] = 0;
-        dfs(1);
+        for (int i = 1; i <= n; i++) {
+            pq.add(i);
+        }
+
+        while (!pq.isEmpty()) {
+            int i = pq.remove();
+            inSPT[i] = true;
+            for (int adj : adjList[i]) {
+                if (!inSPT[adj] && dist[adj] > dist[i] + 1) {
+                    dist[adj] = dist[i] + 1;
+                    pq.remove(adj);
+                    pq.add(adj);
+                }
+            }
+        }
 
         int max = 0;
         for (int d : dist) {
-            if(d>max){
-                max=d;
-                answer=1;
-            }else if(d==max){
+            if (d > max) {
+                max = d;
+                answer = 1;
+            } else if (d == max) {
                 answer++;
             }
         }
