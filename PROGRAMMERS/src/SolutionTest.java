@@ -163,16 +163,25 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution16
-        T = 2;
-        int[][] priorities = {{2, 1, 3, 2},{1, 1, 9, 1, 1, 1}}	;
-        int[] location = {2, 0};
-        Solution16 sol = new Solution16();
+//        // Solution16
+//        T = 2;
+//        int[][] priorities = {{2, 1, 3, 2}, {1, 1, 9, 1, 1, 1}};
+//        int[] location = {2, 0};
+//        Solution16 sol = new Solution16();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(priorities[i], location[i]);
+//            System.out.println(ans);
+//        }
+
+        //Solution17
+        T = 1;
+        int[] n = {6};
+        int[][][] vertex = {{{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}}};
+        Solution17 sol = new Solution17();
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(priorities[i],location[i]);
+            int ans = sol.solution(n[i],vertex[i]);
             System.out.println(ans);
         }
-
     }
 
 
