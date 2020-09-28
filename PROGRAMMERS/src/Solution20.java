@@ -6,22 +6,14 @@ public class Solution20 {
         Arrays.sort(people);
         int n = people.length;
         int light = 0, heavy = n - 1;
-        while(light<=heavy){
-
-            if(light==heavy){
-                answer++;
-                break;
-            }
-
+        while(light<heavy){
             if(people[light]+people[heavy] <= limit){
                 light++;
-                heavy--;
-                answer++;
-            }else{
-                heavy--;
-                answer++;
             }
+            heavy--;
+            answer++;
         }
+        if(light == heavy) answer++;
 
         return answer;
     }
