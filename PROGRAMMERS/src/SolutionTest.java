@@ -173,15 +173,27 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        //Solution17
-        T = 1;
-        int[] n = {6};
-        int[][][] vertex = {{{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}}};
-        Solution17 sol = new Solution17();
+//        //Solution17
+//        T = 1;
+//        int[] n = {6};
+//        int[][][] vertex = {{{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}}};
+//        Solution17 sol = new Solution17();
+//        for (int i = 0; i < T; i++) {
+//            int ans = sol.solution(n[i],vertex[i]);
+//            System.out.println(ans);
+//        }
+
+        T = 2;
+        String[] begin = {"hit", "hit"};
+        String[] target = {"cog", "cog"};
+        String[][] words = {{"hot", "dot", "dog", "lot", "log", "cog"}, {"hot", "dot", "dog", "lot", "log"}};
         for (int i = 0; i < T; i++) {
-            int ans = sol.solution(n[i],vertex[i]);
+            Solution18 sol = new Solution18();
+            int ans = sol.solution(begin[i], target[i], words[i]);
             System.out.println(ans);
         }
+
+
     }
 
 
