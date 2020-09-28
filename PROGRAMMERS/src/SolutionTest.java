@@ -183,16 +183,29 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
+//        //Solution18
+//        T = 3;
+//        String[] begin = {"hit", "hit","hit"};
+//        String[] target = {"cog", "cog","zzz"};
+//        String[][] words = {{"hot", "dot", "dog", "lot", "log", "cog"}, {"hot", "dot", "dog", "lot", "log"}, {"hot", "dot", "dog", "lot", "log","zzz"}};
+//        for (int i = 0; i < T; i++) {
+//            Solution18 sol = new Solution18();
+//            int ans = sol.solution(begin[i], target[i], words[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution19
         T = 3;
-        String[] begin = {"hit", "hit","hit"};
-        String[] target = {"cog", "cog","zzz"};
-        String[][] words = {{"hot", "dot", "dog", "lot", "log", "cog"}, {"hot", "dot", "dog", "lot", "log"}, {"hot", "dot", "dog", "lot", "log","zzz"}};
+        String[][] participant = {{"leo", "kiki", "eden"},
+                {"marina", "josipa", "nikola", "vinko", "filipa"},
+                {"mislav", "stanko", "mislav", "ana"}
+        };
+        String[][] completion = {{"eden", "kiki"}, {"josipa", "filipa", "marina", "nikola"}, {"stanko", "ana", "mislav"}};
         for (int i = 0; i < T; i++) {
-            Solution18 sol = new Solution18();
-            int ans = sol.solution(begin[i], target[i], words[i]);
+            Solution19 sol = new Solution19();
+            String ans = sol.solution(participant[i], completion[i]);
             System.out.println(ans);
         }
-
 
     }
 
