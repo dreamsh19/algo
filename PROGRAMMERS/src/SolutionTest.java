@@ -183,10 +183,10 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        T = 2;
-        String[] begin = {"hit", "hit"};
-        String[] target = {"cog", "cog"};
-        String[][] words = {{"hot", "dot", "dog", "lot", "log", "cog"}, {"hot", "dot", "dog", "lot", "log"}};
+        T = 3;
+        String[] begin = {"hit", "hit","hit"};
+        String[] target = {"cog", "cog","zzz"};
+        String[][] words = {{"hot", "dot", "dog", "lot", "log", "cog"}, {"hot", "dot", "dog", "lot", "log"}, {"hot", "dot", "dog", "lot", "log","zzz"}};
         for (int i = 0; i < T; i++) {
             Solution18 sol = new Solution18();
             int ans = sol.solution(begin[i], target[i], words[i]);
