@@ -194,19 +194,28 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution19
-        T = 3;
-        String[][] participant = {{"leo", "kiki", "eden"},
-                {"marina", "josipa", "nikola", "vinko", "filipa"},
-                {"mislav", "stanko", "mislav", "ana"}
-        };
-        String[][] completion = {{"eden", "kiki"}, {"josipa", "filipa", "marina", "nikola"}, {"stanko", "ana", "mislav"}};
+//        // Solution19
+//        T = 3;
+//        String[][] participant = {{"leo", "kiki", "eden"},
+//                {"marina", "josipa", "nikola", "vinko", "filipa"},
+//                {"mislav", "stanko", "mislav", "ana"}
+//        };
+//        String[][] completion = {{"eden", "kiki"}, {"josipa", "filipa", "marina", "nikola"}, {"stanko", "ana", "mislav"}};
+//        for (int i = 0; i < T; i++) {
+//            Solution19 sol = new Solution19();
+//            String ans = sol.solution(participant[i], completion[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution20
+        T = 2;
+        int[][] people = {{70, 50, 80, 50}, {70, 80, 50}};
+        int[] limit = {100, 100};
         for (int i = 0; i < T; i++) {
-            Solution19 sol = new Solution19();
-            String ans = sol.solution(participant[i], completion[i]);
+            Solution20 sol = new Solution20();
+            int ans = sol.solution(people[i], limit[i]);
             System.out.println(ans);
         }
-
     }
 
 
