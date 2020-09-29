@@ -230,14 +230,23 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution22
-        T = 1;
-        int[] m = {4};
-        int[] n = {3};
-        int[][][] puddles = {{{2, 2}}};
+//        // Solution22
+//        T = 1;
+//        int[] m = {4};
+//        int[] n = {3};
+//        int[][][] puddles = {{{2, 2}}};
+//        for (int i = 0; i < T; i++) {
+//            Solution22 sol = new Solution22();
+//            int ans = sol.solution(m[i], n[i], puddles[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution23
+        T = 3;
+        String[][] phone_book = {{"119", "97674223", "1195524421"}, {"123","456","789"}, {"12","123","1235","567","88"}};			;
         for (int i = 0; i < T; i++) {
-            Solution22 sol = new Solution22();
-            int ans = sol.solution(m[i], n[i], puddles[i]);
+            Solution23 sol = new Solution23();
+            boolean ans = sol.solution(phone_book[i]);
             System.out.println(ans);
         }
     }
