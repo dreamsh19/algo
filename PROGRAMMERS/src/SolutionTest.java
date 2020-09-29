@@ -226,7 +226,7 @@ public class SolutionTest {
         };
         for (int i = 0; i < T; i++) {
             Solution21 sol = new Solution21();
-            int ans = sol.solution(n[i], results[i]);
+            int ans = sol.solution_(n[i], results[i]);
             System.out.println(ans);
         }
     }
