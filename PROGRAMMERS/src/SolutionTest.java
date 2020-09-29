@@ -241,12 +241,22 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution23
-        T = 3;
-        String[][] phone_book = {{"119", "97674223", "1195524421"}, {"123","456","789"}, {"12","123","1235","567","88"}};			;
+//        // Solution23
+//        T = 3;
+//        String[][] phone_book = {{"119", "97674223", "1195524421"}, {"123","456","789"}, {"12","123","1235","567","88"}};			;
+//        for (int i = 0; i < T; i++) {
+//            Solution23 sol = new Solution23();
+//            boolean ans = sol.solution(phone_book[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution24
+        T = 1;
+        int[] n = {6};
+        int[][] times = {{7, 10}};
         for (int i = 0; i < T; i++) {
-            Solution23 sol = new Solution23();
-            boolean ans = sol.solution(phone_book[i]);
+            Solution24 sol = new Solution24();
+            long ans = sol.solution(n[i], times[i]);
             System.out.println(ans);
         }
     }
