@@ -207,13 +207,26 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution20
+//        // Solution20
+//        T = 2;
+//        int[][] people = {{70, 50, 80, 50}, {70, 80, 50}};
+//        int[] limit = {100, 100};
+//        for (int i = 0; i < T; i++) {
+//            Solution20 sol = new Solution20();
+//            int ans = sol.solution(people[i], limit[i]);
+//            System.out.println(ans);
+//        }
+
+
+        // Solution21
         T = 2;
-        int[][] people = {{70, 50, 80, 50}, {70, 80, 50}};
-        int[] limit = {100, 100};
+        int[] n = {5, 7};
+        int[][][] results = {{{4, 3}, {4, 2}, {3, 2}, {1, 2}, {2, 5}},
+                {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}}
+        };
         for (int i = 0; i < T; i++) {
-            Solution20 sol = new Solution20();
-            int ans = sol.solution(people[i], limit[i]);
+            Solution21 sol = new Solution21();
+            int ans = sol.solution(n[i], results[i]);
             System.out.println(ans);
         }
     }
