@@ -218,15 +218,26 @@ public class SolutionTest {
 //        }
 
 
-        // Solution21
-        T = 2;
-        int[] n = {5, 7};
-        int[][][] results = {{{4, 3}, {4, 2}, {3, 2}, {1, 2}, {2, 5}},
-                {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}}
-        };
+//        // Solution21
+//        T = 2;
+//        int[] n = {5, 7};
+//        int[][][] results = {{{4, 3}, {4, 2}, {3, 2}, {1, 2}, {2, 5}},
+//                {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}}
+//        };
+//        for (int i = 0; i < T; i++) {
+//            Solution21 sol = new Solution21();
+//            int ans = sol.solution_(n[i], results[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution22
+        T = 1;
+        int[] m = {4};
+        int[] n = {3};
+        int[][][] puddles = {{{2, 2}}};
         for (int i = 0; i < T; i++) {
-            Solution21 sol = new Solution21();
-            int ans = sol.solution_(n[i], results[i]);
+            Solution22 sol = new Solution22();
+            int ans = sol.solution(m[i], n[i], puddles[i]);
             System.out.println(ans);
         }
     }
