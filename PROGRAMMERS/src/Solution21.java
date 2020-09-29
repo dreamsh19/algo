@@ -40,38 +40,45 @@ public class Solution21 {
     //for solution_()
     HashSet<Integer>[] parentSet;
     HashSet<Integer>[] childSet;
-    boolean[] dfs_visited;
+    HashSet<Integer>[] parentSetFinal;
+    HashSet<Integer>[] childSetFinal;
 
 
-    int getChildNum(int root) {
-        dfs_visited[root] = true;
-        int numChild = 0;
-        for (int c : childSet[root]) {
-            if (!dfs_visited[c]) {
-                numChild += 1 + getChildNum(c);
+    void getParentSetFinal(int root) {
+        if (parentSetFinal[root] == null) {
+            parentSetFinal[root] = new HashSet<>();
+            for (int p : parentSet[root]) {
+                if (!parentSetFinal[root].contains(p)) {
+                    parentSetFinal[root].add(p);
+                    getParentSetFinal(p);
+                    parentSetFinal[root].addAll(parentSetFinal[p]);
+                }
             }
         }
-        return numChild;
     }
 
-    int getParentNum(int root) {
-        dfs_visited[root] = true;
-        int numParent = 0;
-        for (int p : parentSet[root]) {
-            if (!dfs_visited[p]) {
-                numParent += 1 + getParentNum(p);
+    void getChildSetFinal(int root) {
+        if (childSetFinal[root] == null) {
+            childSetFinal[root] = new HashSet<>();
+            for (int c : childSet[root]) {
+                if (!childSetFinal[root].contains(c)) {
+                    childSetFinal[root].add(c);
+                    getChildSetFinal(c);
+                    childSetFinal[root].addAll(childSetFinal[c]);
+                }
             }
         }
-        return numParent;
     }
 
     public int solution_(int n, int[][] results) {
         parentSet = new HashSet[n + 1];
         childSet = new HashSet[n + 1];
+        parentSetFinal = new HashSet[n + 1];
+        childSetFinal = new HashSet[n + 1];
 
         for (int i = 1; i <= n; i++) {
-            parentSet[i]=new HashSet<>();
-            childSet[i]=new HashSet<>();
+            parentSet[i] = new HashSet<>();
+            childSet[i] = new HashSet<>();
         }
         for (int[] res : results) {
             int win = res[0];
@@ -82,8 +89,11 @@ public class Solution21 {
 
         int answer = 0;
         for (int i = 1; i <= n; i++) {
-            dfs_visited = new boolean[n + 1];
-            if (getChildNum(i) + getParentNum(i) == n - 1) answer++;
+            getParentSetFinal(i);
+            getChildSetFinal(i);
+        }
+        for (int i = 1; i <= n; i++) {
+            if (parentSetFinal[i].size() + childSetFinal[i].size() == n - 1) answer++;
         }
 
         return answer;
