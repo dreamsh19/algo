@@ -251,9 +251,12 @@ public class SolutionTest {
 //        }
 
         // Solution24
-        T = 1;
-        int[] n = {6};
-        int[][] times = {{7, 10}};
+        T = 6;
+        int[] n = {6, 1, 2, 10, 2, 2};
+
+        int[][] times = {{7, 10}, {5, 5}, {5, 6, 6, 6}, {2, 4, 4, 4, 4}, {5, 5, 6},
+                {1000000000}
+        };
         for (int i = 0; i < T; i++) {
             Solution24 sol = new Solution24();
             long ans = sol.solution(n[i], times[i]);
