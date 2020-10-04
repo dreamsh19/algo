@@ -250,16 +250,25 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution24
-        T = 6;
-        int[] n = {6, 1, 2, 10, 2, 2};
+//        // Solution24
+//        T = 6;
+//        int[] n = {6, 1, 2, 10, 2, 2};
+//
+//        int[][] times = {{7, 10}, {5, 5}, {5, 6, 6, 6}, {2, 4, 4, 4, 4}, {5, 5, 6},
+//                {1000000000}
+//        };
+//        for (int i = 0; i < T; i++) {
+//            Solution24 sol = new Solution24();
+//            long ans = sol.solution(n[i], times[i]);
+//            System.out.println(ans);
+//        }
 
-        int[][] times = {{7, 10}, {5, 5}, {5, 6, 6, 6}, {2, 4, 4, 4, 4}, {5, 5, 6},
-                {1000000000}
-        };
+        // Solution25
+        T = 2;
+        int[][][] jobs = {{{0,3},{1,9},{2,6}},{{1,3},{1,9},{2,6}}};
         for (int i = 0; i < T; i++) {
-            Solution24 sol = new Solution24();
-            long ans = sol.solution(n[i], times[i]);
+            Solution25 sol = new Solution25();
+            int ans = sol.solution(jobs[i]);
             System.out.println(ans);
         }
     }
