@@ -14,25 +14,18 @@ public class Solution25 {
         }
 
         PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> jobs[o1][1] - jobs[o2][1]);
-
-        int time = jobs[0][0];
-        while (!q.isEmpty()) {
-            time = jobs[q.peek()][0];
-            while(!q.isEmpty() && jobs[q.peek()][0] <= time){
+        int time = 0;
+        while (!pq.isEmpty() || !q.isEmpty()) {
+            if (pq.isEmpty() && time < jobs[q.peek()][0]) time = jobs[q.peek()][0];
+            while (!q.isEmpty() && jobs[q.peek()][0] <= time) {
                 pq.add(q.poll());
             }
-            while (!pq.isEmpty()) {
-                int i = pq.remove();
-                int finish = time + jobs[i][1];
-                int start = jobs[i][0];
-                avg += finish - start;
-                time = finish;
-//                System.out.println(finish-start);
-                while(!q.isEmpty() && jobs[q.peek()][0] <= time){
-                    pq.add(q.poll());
-                }
-            }
+            int i = pq.remove();
+            int start = jobs[i][0];
+            time += jobs[i][1];
+            avg += time - start;
         }
+
         return avg / n;
 
     }
