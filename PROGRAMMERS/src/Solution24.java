@@ -1,22 +1,37 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 public class Solution24 {
-    public long solution(int n, int[] times) {
-        int l = times.length;
-        long[] time = new long[l];
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Comparator.comparingLong(o -> time[o]));
 
-        for (int i = 0; i < l; i++) {
-            time[i] = times[i];
-            pq.add(i);
+    int[] times;
+
+    long getNum(long time) {
+        long num = 0;
+        for (int t : times) {
+            num += time / t;
         }
-        while (n > 1) {
-            int i = pq.remove();
-            time[i] += times[i];
-            pq.add(i);
-            n--;
+        return num;
+    }
+
+    public long solution(int n, int[] times) {
+        this.times = times;
+        int minTime = Integer.MAX_VALUE;
+        for (int t : times) {
+            minTime = Math.min(minTime, t);
         }
-        return time[pq.remove()];
+
+        long max = (long) minTime * n;
+        long min = minTime;
+        long answer = max;
+        long mid;
+
+        while (min <= max) {
+            mid = (max + min) / 2;
+            long num = getNum(mid);
+            if (num < n) {
+                min = mid + 1;
+            } else if (num >= n) {
+                answer = mid;
+                max = mid - 1;
+            }
+        }
+        return answer;
     }
 }
