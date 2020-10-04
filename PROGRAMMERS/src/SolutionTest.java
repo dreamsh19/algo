@@ -263,14 +263,26 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution25
-        T = 2;
-        int[][][] jobs = {{{0,3},{1,9},{2,6}},{{1,3},{1,9},{2,6}}};
+//        // Solution25
+//        T = 2;
+//        int[][][] jobs = {{{0,3},{1,9},{2,6}},{{1,3},{1,9},{2,6}}};
+//        for (int i = 0; i < T; i++) {
+//            Solution25 sol = new Solution25();
+//            int ans = sol.solution(jobs[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution26
+        T = 1;
+        int[] n={4};
+        int[][][] costs = {{{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}}};
         for (int i = 0; i < T; i++) {
-            Solution25 sol = new Solution25();
-            int ans = sol.solution(jobs[i]);
+            Solution26 sol = new Solution26();
+            int ans = sol.solution(n[i],costs[i]);
             System.out.println(ans);
         }
+
+
     }
 
 
