@@ -282,21 +282,29 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution27
-        T = 3;
-        String[][][] tickets = {{{"ICN", "JFK"}, {"HND", "IAD"}, {"JFK", "HND"}},
-                {{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL", "SFO"}},
-                {{"ICN", "DEF"}, {"DEF", "GHI"}, {"GHI", "JKL"}, {"JKL", "ICN"}, {"ICN", "ABC"}}
-        };
-        for (int i = 0; i < T; i++) {
-            Solution27 sol = new Solution27();
-            String[] ans = sol.solution(tickets[i]);
-            for (String s : ans) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
-        }
+//        // Solution27
+//        T = 3;
+//        String[][][] tickets = {{{"ICN", "JFK"}, {"HND", "IAD"}, {"JFK", "HND"}},
+//                {{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL", "SFO"}},
+//                {{"ICN", "DEF"}, {"DEF", "GHI"}, {"GHI", "JKL"}, {"JKL", "ICN"}, {"ICN", "ABC"}}
+//        };
+//        for (int i = 0; i < T; i++) {
+//            Solution27 sol = new Solution27();
+//            String[] ans = sol.solution(tickets[i]);
+//            for (String s : ans) {
+//                System.out.print(s + " ");
+//            }
+//            System.out.println();
+//        }
 
+        // Solution28
+        T = 2;
+        String[] numbers = {"17","011"};
+        for (int i = 0; i < T; i++) {
+            Solution28 sol = new Solution28();
+            int ans = sol.solution(numbers[i]);
+            System.out.println(ans);
+        }
 
     }
 
