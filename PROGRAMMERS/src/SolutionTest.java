@@ -297,12 +297,22 @@ public class SolutionTest {
 //            System.out.println();
 //        }
 
-        // Solution28
+//        // Solution28
+//        T = 2;
+//        String[] numbers = {"17","011"};
+//        for (int i = 0; i < T; i++) {
+//            Solution28 sol = new Solution28();
+//            int ans = sol.solution(numbers[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution29
         T = 2;
-        String[] numbers = {"17","011"};
+        int[] N = {5, 2};
+        int[] number = {12, 11};
         for (int i = 0; i < T; i++) {
-            Solution28 sol = new Solution28();
-            int ans = sol.solution(numbers[i]);
+            Solution29 sol = new Solution29();
+            int ans = sol.solution(N[i], number[i]);
             System.out.println(ans);
         }
 
