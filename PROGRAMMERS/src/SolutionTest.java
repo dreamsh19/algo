@@ -272,14 +272,29 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution26
-        T = 1;
-        int[] n={4};
-        int[][][] costs = {{{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}}};
+//        // Solution26
+//        T = 1;
+//        int[] n = {4};
+//        int[][][] costs = {{{0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 1}, {2, 3, 8}}};
+//        for (int i = 0; i < T; i++) {
+//            Solution26 sol = new Solution26();
+//            int ans = sol.solution(n[i], costs[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution27
+        T = 3;
+        String[][][] tickets = {{{"ICN", "JFK"}, {"HND", "IAD"}, {"JFK", "HND"}},
+                {{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL", "SFO"}},
+                {{"ICN", "DEF"}, {"DEF", "GHI"}, {"GHI", "JKL"}, {"JKL", "ICN"}, {"ICN", "ABC"}}
+        };
         for (int i = 0; i < T; i++) {
-            Solution26 sol = new Solution26();
-            int ans = sol.solution(n[i],costs[i]);
-            System.out.println(ans);
+            Solution27 sol = new Solution27();
+            String[] ans = sol.solution(tickets[i]);
+            for (String s : ans) {
+                System.out.print(s + " ");
+            }
+            System.out.println();
         }
 
 
