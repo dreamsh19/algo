@@ -316,14 +316,27 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution30
-        T = 1;
-        int[] distance = {25};
-        int[][] rocks = {{2, 14, 11, 21, 17}};
-        int[] n = {2};
+//        // Solution30
+//        T = 1;
+//        int[] distance = {25};
+//        int[][] rocks = {{2, 14, 11, 21, 17}};
+//        int[] n = {2};
+//        for (int i = 0; i < T; i++) {
+//            Solution30 sol = new Solution30();
+//            int ans = sol.solution(distance[i], rocks[i], n[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution31
+        T = 2;
+        int[] n = {3, 3};
+        int[][][] computers = {
+                {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}},
+                {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}},
+        };
         for (int i = 0; i < T; i++) {
-            Solution30 sol = new Solution30();
-            int ans = sol.solution(distance[i], rocks[i], n[i]);
+            Solution31 sol = new Solution31();
+            int ans = sol.solution(n[i], computers[i]);
             System.out.println(ans);
         }
 
