@@ -341,8 +341,8 @@ public class SolutionTest {
 //        }
 
         // Solution32
-        T = 4;
-        String[] name = {"JAZ", "JEROEN", "JAN", "BAAAB"};
+        T = 5;
+        String[] name = {"JAZ", "JEROEN", "JAN", "BAAAB", "AAA"};
         for (int i = 0; i < T; i++) {
             Solution32 sol = new Solution32();
             int ans = sol.solution(name[i]);
