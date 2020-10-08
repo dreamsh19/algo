@@ -20,8 +20,7 @@ public class Solution35 {
         for (String s : arr) {
             answer += s;
         }
-
-        return answer;
+        return answer.startsWith("0") ? "0" : answer;
     }
 
 }
