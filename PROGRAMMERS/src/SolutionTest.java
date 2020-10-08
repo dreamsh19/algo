@@ -349,16 +349,28 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution33
-        T = 3;
-        int[] n = {5, 5, 3};
-        int[][] lost = {{2, 4}, {2, 4}, {3}};
-        int[][] reserve = {{1, 3, 5}, {3}, {1}};
+//        // Solution33
+//        T = 3;
+//        int[] n = {5, 5, 3};
+//        int[][] lost = {{2, 4}, {2, 4}, {3}};
+//        int[][] reserve = {{1, 3, 5}, {3}, {1}};
+//        for (int i = 0; i < T; i++) {
+//            Solution33 sol = new Solution33();
+//            int ans = sol.solution(n[i], lost[i], reserve[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution34
+        T = 2;
+        int[][] progresses = {{93, 30, 55}, {95, 90, 99, 99, 80, 99}};
+        int[][] speeds = {{1, 30, 5}, {1, 1, 1, 1, 1, 1}};
         for (int i = 0; i < T; i++) {
-            Solution33 sol = new Solution33();
-            int ans = sol.solution(n[i], lost[i], reserve[i]);
-            System.out.println(ans);
+            Solution34 sol = new Solution34();
+            int[] ans = sol.solution(progresses[i], speeds[i]);
+            printIntArray(ans);
         }
+
+
     }
 
 }
