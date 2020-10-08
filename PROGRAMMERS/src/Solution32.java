@@ -3,31 +3,23 @@ public class Solution32 {
     public int solution(String name) {
         int len = name.length();
 
-        String start = "";
-        for (int i = 0; i < len; i++) {
-            start += 'A';
+        int changeCount = 0;
+        char[] target = name.toCharArray();
+        for (char c : target) {
+            int diff = c - 'A';
+            changeCount += Math.min(diff, 26 - diff);
         }
-        int answer = Integer.MAX_VALUE;
-        for (int startPos = 0; startPos < len; startPos++) {
+        if (changeCount == 0) return 0;
 
-            for (int k = 0; k < 2; k++) {
-                char[] arr = start.toCharArray();
-                int dist = startPos;
-                int i = startPos;
-                while (!new String(arr).equals(name)) {
-                    int diff = name.charAt(i) - arr[i];
-                    diff = Math.min(diff, 26 - diff);
-                    dist += diff + 1;
-                    arr[i] = name.charAt(i);
-                    if (k == 0) {
-                        i = (i + 1) % len;
-                    } else {
-                        if (--i < 0) i = len - 1;
-                    }
-                }
-                answer = Math.min(answer, dist);
-            }
+        int moveCount = len - 1;
+        for (int start = 0; start < len; start++) {
+            if (target[start] == 'A') continue;
+            int j = start + 1;
+            while (j < len && target[j] == 'A') j++;
+            int backCount = len - j;
+            moveCount = Math.min(moveCount, start + backCount + Math.min(start, backCount));
         }
-        return answer - 1;
+
+        return changeCount + moveCount;
     }
 }
