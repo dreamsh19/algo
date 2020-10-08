@@ -360,14 +360,23 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution34
+//        // Solution34
+//        T = 2;
+//        int[][] progresses = {{93, 30, 55}, {95, 90, 99, 99, 80, 99}};
+//        int[][] speeds = {{1, 30, 5}, {1, 1, 1, 1, 1, 1}};
+//        for (int i = 0; i < T; i++) {
+//            Solution34 sol = new Solution34();
+//            int[] ans = sol.solution_(progresses[i], speeds[i]);
+//            printIntArray(ans);
+//        }
+
+        // Solution35
         T = 2;
-        int[][] progresses = {{93, 30, 55}, {95, 90, 99, 99, 80, 99}};
-        int[][] speeds = {{1, 30, 5}, {1, 1, 1, 1, 1, 1}};
+        int[][] numbers = {{6, 10, 2}, {3, 30, 34, 5, 9}};
         for (int i = 0; i < T; i++) {
-            Solution34 sol = new Solution34();
-            int[] ans = sol.solution_(progresses[i], speeds[i]);
-            printIntArray(ans);
+            Solution35 sol = new Solution35();
+            String ans = sol.solution(numbers[i]);
+            System.out.println(ans);
         }
 
 
