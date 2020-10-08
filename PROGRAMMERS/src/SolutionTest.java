@@ -340,17 +340,26 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution32
-        T = 5;
-        String[] name = {"JAZ", "JEROEN", "JAN", "BAAAB", "AAA"};
+//        // Solution32
+//        T = 5;
+//        String[] name = {"JAZ", "JEROEN", "JAN", "BAAAB", "AAA"};
+//        for (int i = 0; i < T; i++) {
+//            Solution32 sol = new Solution32();
+//            int ans = sol.solution(name[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution33
+        T = 3;
+        int[] n = {5, 5, 3};
+        int[][] lost = {{2, 4}, {2, 4}, {3}};
+        int[][] reserve = {{1, 3, 5}, {3}, {1}};
         for (int i = 0; i < T; i++) {
-            Solution32 sol = new Solution32();
-            int ans = sol.solution(name[i]);
+            Solution33 sol = new Solution33();
+            int ans = sol.solution(n[i], lost[i], reserve[i]);
             System.out.println(ans);
         }
-
     }
-
 
 }
 
