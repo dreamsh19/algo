@@ -327,16 +327,25 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution31
-        T = 2;
-        int[] n = {3, 3};
-        int[][][] computers = {
-                {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}},
-                {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}},
-        };
+//        // Solution31
+//        T = 2;
+//        int[] n = {3, 3};
+//        int[][][] computers = {
+//                {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}},
+//                {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}},
+//        };
+//        for (int i = 0; i < T; i++) {
+//            Solution31 sol = new Solution31();
+//            int ans = sol.solution(n[i], computers[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution32
+        T = 4;
+        String[] name = {"JAZ", "JEROEN", "JAN", "BAAAB"};
         for (int i = 0; i < T; i++) {
-            Solution31 sol = new Solution31();
-            int ans = sol.solution(n[i], computers[i]);
+            Solution32 sol = new Solution32();
+            int ans = sol.solution(name[i]);
             System.out.println(ans);
         }
 
