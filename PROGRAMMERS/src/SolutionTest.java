@@ -306,13 +306,24 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution29
-        T = 2;
-        int[] N = {5, 2};
-        int[] number = {12, 11};
+//        // Solution29
+//        T = 2;
+//        int[] N = {5, 2};
+//        int[] number = {12, 11};
+//        for (int i = 0; i < T; i++) {
+//            Solution29 sol = new Solution29();
+//            int ans = sol.solution(N[i], number[i]);
+//            System.out.println(ans);
+//        }
+
+        // Solution30
+        T = 1;
+        int[] distance = {25};
+        int[][] rocks = {{2, 14, 11, 21, 17}};
+        int[] n = {2};
         for (int i = 0; i < T; i++) {
-            Solution29 sol = new Solution29();
-            int ans = sol.solution(N[i], number[i]);
+            Solution30 sol = new Solution30();
+            int ans = sol.solution(distance[i], rocks[i], n[i]);
             System.out.println(ans);
         }
 
