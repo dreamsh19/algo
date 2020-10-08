@@ -371,8 +371,8 @@ public class SolutionTest {
 //        }
 
         // Solution35
-        T = 2;
-        int[][] numbers = {{6, 10, 2}, {3, 30, 34, 5, 9}};
+        T = 3;
+        int[][] numbers = {{6, 10, 2}, {3, 30, 34, 5, 9},{0,0}};
         for (int i = 0; i < T; i++) {
             Solution35 sol = new Solution35();
             String ans = sol.solution(numbers[i]);
