@@ -366,7 +366,7 @@ public class SolutionTest {
         int[][] speeds = {{1, 30, 5}, {1, 1, 1, 1, 1, 1}};
         for (int i = 0; i < T; i++) {
             Solution34 sol = new Solution34();
-            int[] ans = sol.solution(progresses[i], speeds[i]);
+            int[] ans = sol.solution_(progresses[i], speeds[i]);
             printIntArray(ans);
         }
 
