@@ -379,9 +379,9 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution35
-        T = 2;
-        int[][] money = {{1,2,3,1},{3,3,3}};
+        // Solution36
+        T = 4   ;
+        int[][] money = {{1, 2, 3, 1}, {3, 3, 3}, {1, 5, 1}, {1, 1, 5}};
         for (int i = 0; i < T; i++) {
             Solution36 sol = new Solution36();
             int ans = sol.solution(money[i]);
