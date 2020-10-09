@@ -370,15 +370,23 @@ public class SolutionTest {
 //            printIntArray(ans);
 //        }
 
+//        // Solution35
+//        T = 3;
+//        int[][] numbers = {{6, 10, 2}, {3, 30, 34, 5, 9},{0,0}};
+//        for (int i = 0; i < T; i++) {
+//            Solution35 sol = new Solution35();
+//            String ans = sol.solution(numbers[i]);
+//            System.out.println(ans);
+//        }
+
         // Solution35
-        T = 3;
-        int[][] numbers = {{6, 10, 2}, {3, 30, 34, 5, 9},{0,0}};
+        T = 2;
+        int[][] money = {{1,2,3,1},{3,3,3}};
         for (int i = 0; i < T; i++) {
-            Solution35 sol = new Solution35();
-            String ans = sol.solution(numbers[i]);
+            Solution36 sol = new Solution36();
+            int ans = sol.solution(money[i]);
             System.out.println(ans);
         }
-
 
     }
 
