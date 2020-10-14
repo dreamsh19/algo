@@ -1,0 +1,123 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main7 {
+
+    static final int[] dx = {-1, 0, 1, 0};
+    static final int[] dy = {0, 1, 0, -1};
+
+    int N;
+    int[][] matrix;
+    boolean[][] visited;
+    int cur_x, cur_y;
+    int size;
+    int count;
+    int pray_x, pray_y, pray_dist;
+
+    Queue<String> bfs_q;
+
+    boolean isBlocked(int x, int y) {
+        return x < 0 || x >= N || y < 0 || y >= N || visited[x][y] || matrix[x][y] > size;
+    }
+
+    String intToString(int x, int y, int dist) {
+        return "" + x + "," + y + "," + dist;
+    }
+
+    void updatePray(int x, int y, int dist) {
+        if (matrix[x][y] > 0 && matrix[x][y] < size && dist <= pray_dist) {
+            if (dist < pray_dist) {
+                pray_dist = dist;
+                pray_x = x;
+                pray_y = y;
+            } else {
+                if (x < pray_x) {
+                    pray_x = x;
+                    pray_y = y;
+                } else if (x == pray_x) {
+                    pray_y = Math.min(y, pray_y);
+                }
+            }
+        }
+    }
+
+    boolean search() {
+
+        visited = new boolean[N][N];
+        bfs_q.offer(intToString(cur_x, cur_y, 0));
+        visited[cur_x][cur_y] = true;
+        pray_dist = Integer.MAX_VALUE;
+        pray_x = Integer.MAX_VALUE;
+        pray_y = Integer.MAX_VALUE;
+        while (!bfs_q.isEmpty()) {
+            String[] s = bfs_q.poll().split(",");
+            int x = Integer.parseInt(s[0]);
+            int y = Integer.parseInt(s[1]);
+            int dist = Integer.parseInt(s[2]);
+            updatePray(x, y, dist);
+
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (!isBlocked(nx, ny)) {
+                    bfs_q.offer(intToString(nx, ny, dist + 1));
+                    visited[nx][ny] = true;
+                }
+
+            }
+        }
+        return pray_dist != Integer.MAX_VALUE;
+    }
+
+    void move() {
+        matrix[cur_x][cur_y] = 0;
+        cur_x = pray_x;
+        cur_y = pray_y;
+        matrix[cur_x][cur_y] = 0;
+        if (++count == size) {
+            size++;
+            count = 0;
+        }
+    }
+
+    int solution() {
+        int T = 0;
+        size = 2;
+        count = 0;
+        bfs_q = new LinkedList<>();
+
+        while (search()) {
+            move();
+            T += pray_dist;
+        }
+        return T;
+    }
+
+    void getInput() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        matrix = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            String[] line = br.readLine().split(" ");
+            for (int j = 0; j < N; j++) {
+                int tmp = Integer.parseInt(line[j]);
+                matrix[i][j] = tmp;
+                if (tmp == 9) {
+                    cur_x = i;
+                    cur_y = j;
+                }
+            }
+        }
+        br.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        Main7 m = new Main7();
+        m.getInput();
+        int ans = m.solution();
+        System.out.println(ans);
+    }
+}
