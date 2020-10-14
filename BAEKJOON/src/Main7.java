@@ -8,23 +8,20 @@ public class Main7 {
 
     static final int[] dx = {-1, 0, 1, 0};
     static final int[] dy = {0, 1, 0, -1};
-
+    static final String SEPARATOR = ",";
     int N;
     int[][] matrix;
     boolean[][] visited;
-    int cur_x, cur_y;
-    int size;
-    int count;
+    int cur_x, cur_y, size, count;
     int prey_x, prey_y, prey_dist;
 
-    Queue<String> bfs_q;
 
     boolean isBlocked(int x, int y) {
         return x < 0 || x >= N || y < 0 || y >= N || visited[x][y] || matrix[x][y] > size;
     }
 
     String intToString(int x, int y, int dist) {
-        return "" + x + "," + y + "," + dist;
+        return x + SEPARATOR + y + SEPARATOR + dist;
     }
 
     void updatePrey(int x, int y, int dist) {
@@ -47,16 +44,18 @@ public class Main7 {
     boolean search() {
 
         visited = new boolean[N][N];
+        Queue<String> bfs_q = new LinkedList<>();
         bfs_q.offer(intToString(cur_x, cur_y, 0));
         visited[cur_x][cur_y] = true;
         prey_dist = Integer.MAX_VALUE;
         prey_x = Integer.MAX_VALUE;
         prey_y = Integer.MAX_VALUE;
         while (!bfs_q.isEmpty()) {
-            String[] s = bfs_q.poll().split(",");
+            String[] s = bfs_q.poll().split(SEPARATOR);
             int x = Integer.parseInt(s[0]);
             int y = Integer.parseInt(s[1]);
             int dist = Integer.parseInt(s[2]);
+            if (dist > prey_dist) break;
             updatePrey(x, y, dist);
 
             for (int i = 0; i < 4; i++) {
@@ -73,7 +72,6 @@ public class Main7 {
     }
 
     void move() {
-        matrix[cur_x][cur_y] = 0;
         cur_x = prey_x;
         cur_y = prey_y;
         matrix[cur_x][cur_y] = 0;
@@ -87,7 +85,6 @@ public class Main7 {
         int T = 0;
         size = 2;
         count = 0;
-        bfs_q = new LinkedList<>();
 
         while (search()) {
             move();
@@ -104,11 +101,13 @@ public class Main7 {
             String[] line = br.readLine().split(" ");
             for (int j = 0; j < N; j++) {
                 int tmp = Integer.parseInt(line[j]);
-                matrix[i][j] = tmp;
                 if (tmp == 9) {
                     cur_x = i;
                     cur_y = j;
+                    tmp = 0;
                 }
+                matrix[i][j] = tmp;
+
             }
         }
         br.close();
