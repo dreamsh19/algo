@@ -8,72 +8,77 @@ public class Main7 {
 
     static final int[] dx = {-1, 0, 1, 0};
     static final int[] dy = {0, 1, 0, -1};
-    static final String SEPARATOR = ",";
+    final Pair NULL = new Pair(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+
     int N;
     int[][] matrix;
     boolean[][] visited;
     int cur_x, cur_y, size, count;
-    int prey_x, prey_y, prey_dist;
+    Pair prey;
 
+    class Pair implements Comparable<Pair> {
+        int x, y, dist;
+
+        Pair(int x, int y, int dist) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            return this.dist == o.dist ? (this.x == o.x ? this.y - o.y : this.x - o.x) : this.dist - o.dist;
+        }
+
+        @Override
+        public String toString() {
+            return "Pair{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    ", dist=" + dist +
+                    '}';
+        }
+    }
 
     boolean isBlocked(int x, int y) {
         return x < 0 || x >= N || y < 0 || y >= N || visited[x][y] || matrix[x][y] > size;
     }
 
-    String intToString(int x, int y, int dist) {
-        return x + SEPARATOR + y + SEPARATOR + dist;
+    boolean isEatable(int x, int y) {
+        return matrix[x][y] > 0 && matrix[x][y] < size;
     }
 
-    void updatePrey(int x, int y, int dist) {
-        if (matrix[x][y] > 0 && matrix[x][y] < size && dist <= prey_dist) {
-            if (dist < prey_dist) {
-                prey_dist = dist;
-                prey_x = x;
-                prey_y = y;
-            } else {
-                if (x < prey_x) {
-                    prey_x = x;
-                    prey_y = y;
-                } else if (x == prey_x) {
-                    prey_y = Math.min(y, prey_y);
-                }
-            }
-        }
-    }
-
-    boolean search() {
+    Pair search() {
 
         visited = new boolean[N][N];
-        Queue<String> bfs_q = new LinkedList<>();
-        bfs_q.offer(intToString(cur_x, cur_y, 0));
+        Queue<Pair> bfs_q = new LinkedList<>();
+        bfs_q.offer(new Pair(cur_x, cur_y, 0));
         visited[cur_x][cur_y] = true;
-        prey_dist = Integer.MAX_VALUE;
-        prey_x = Integer.MAX_VALUE;
-        prey_y = Integer.MAX_VALUE;
-        while (!bfs_q.isEmpty()) {
-            String[] s = bfs_q.poll().split(SEPARATOR);
-            int x = Integer.parseInt(s[0]);
-            int y = Integer.parseInt(s[1]);
-            int dist = Integer.parseInt(s[2]);
-            if (dist > prey_dist) break;
-            updatePrey(x, y, dist);
 
+        prey = NULL;
+        while (!bfs_q.isEmpty()) {
+            Pair p = bfs_q.poll();
+            int x = p.x;
+            int y = p.y;
+            int dist = p.dist;
+            if (dist > prey.dist) break;
+            if (isEatable(x, y) && p.compareTo(prey) < 0) prey = p;
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
                 if (!isBlocked(nx, ny)) {
-                    bfs_q.offer(intToString(nx, ny, dist + 1));
+                    bfs_q.offer(new Pair(nx, ny, dist + 1));
                     visited[nx][ny] = true;
                 }
 
             }
         }
-        return prey_dist != Integer.MAX_VALUE;
+        return prey;
     }
 
     void move() {
-        cur_x = prey_x;
-        cur_y = prey_y;
+        cur_x = prey.x;
+        cur_y = prey.y;
         matrix[cur_x][cur_y] = 0;
         if (++count == size) {
             size++;
@@ -85,10 +90,9 @@ public class Main7 {
         int T = 0;
         size = 2;
         count = 0;
-
-        while (search()) {
+        while (search() != NULL) {
             move();
-            T += prey_dist;
+            T += prey.dist;
         }
         return T;
     }
