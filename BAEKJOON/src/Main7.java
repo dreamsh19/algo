@@ -15,7 +15,7 @@ public class Main7 {
     int cur_x, cur_y;
     int size;
     int count;
-    int pray_x, pray_y, pray_dist;
+    int prey_x, prey_y, prey_dist;
 
     Queue<String> bfs_q;
 
@@ -27,18 +27,18 @@ public class Main7 {
         return "" + x + "," + y + "," + dist;
     }
 
-    void updatePray(int x, int y, int dist) {
-        if (matrix[x][y] > 0 && matrix[x][y] < size && dist <= pray_dist) {
-            if (dist < pray_dist) {
-                pray_dist = dist;
-                pray_x = x;
-                pray_y = y;
+    void updatePrey(int x, int y, int dist) {
+        if (matrix[x][y] > 0 && matrix[x][y] < size && dist <= prey_dist) {
+            if (dist < prey_dist) {
+                prey_dist = dist;
+                prey_x = x;
+                prey_y = y;
             } else {
-                if (x < pray_x) {
-                    pray_x = x;
-                    pray_y = y;
-                } else if (x == pray_x) {
-                    pray_y = Math.min(y, pray_y);
+                if (x < prey_x) {
+                    prey_x = x;
+                    prey_y = y;
+                } else if (x == prey_x) {
+                    prey_y = Math.min(y, prey_y);
                 }
             }
         }
@@ -49,15 +49,15 @@ public class Main7 {
         visited = new boolean[N][N];
         bfs_q.offer(intToString(cur_x, cur_y, 0));
         visited[cur_x][cur_y] = true;
-        pray_dist = Integer.MAX_VALUE;
-        pray_x = Integer.MAX_VALUE;
-        pray_y = Integer.MAX_VALUE;
+        prey_dist = Integer.MAX_VALUE;
+        prey_x = Integer.MAX_VALUE;
+        prey_y = Integer.MAX_VALUE;
         while (!bfs_q.isEmpty()) {
             String[] s = bfs_q.poll().split(",");
             int x = Integer.parseInt(s[0]);
             int y = Integer.parseInt(s[1]);
             int dist = Integer.parseInt(s[2]);
-            updatePray(x, y, dist);
+            updatePrey(x, y, dist);
 
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
@@ -69,13 +69,13 @@ public class Main7 {
 
             }
         }
-        return pray_dist != Integer.MAX_VALUE;
+        return prey_dist != Integer.MAX_VALUE;
     }
 
     void move() {
         matrix[cur_x][cur_y] = 0;
-        cur_x = pray_x;
-        cur_y = pray_y;
+        cur_x = prey_x;
+        cur_y = prey_y;
         matrix[cur_x][cur_y] = 0;
         if (++count == size) {
             size++;
@@ -91,7 +91,7 @@ public class Main7 {
 
         while (search()) {
             move();
-            T += pray_dist;
+            T += prey_dist;
         }
         return T;
     }
