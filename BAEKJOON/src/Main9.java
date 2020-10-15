@@ -8,12 +8,11 @@ public class Main9 {
     int[] A;
 
     long solution() {
-        for (int i = 0; i < N; i++) {
-            A[i] = Math.max(A[i] - B, 0);
-        }
+
         long answer = N;
         for (int a : A) {
-            if(a>0) answer += (long) ((a - 1) / C) + 1;
+            a -= B;
+            if (a > 0) answer += (long) ((a - 1) / C) + 1;
         }
         return answer;
     }
