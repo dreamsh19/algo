@@ -11,7 +11,7 @@ public class Main8 {
     static final int MAX_TIME = 10;
     char[][][] matrices;
 
-    class State {
+    class State implements Cloneable {
 
         static final int NULL = -1;
 
@@ -42,14 +42,15 @@ public class Main8 {
             by = y;
         }
 
-        State rotate() {
-            int nIdx = (idx + 1) % 4;
+        void rotate() {
             int m = matrices[idx].length;
-            int nrx = ry;
-            int nry = m - 1 - rx;
-            int nbx = by;
-            int nby = m - 1 - bx;
-            return new State(nIdx, nrx, nry, nbx, nby, time);
+            idx = (idx + 1) % 4;
+            int tmp = rx;
+            rx = ry;
+            ry = m - 1 - tmp;
+            tmp = bx;
+            bx = by;
+            by = m - 1 - tmp;
         }
 
         boolean isRed(int x, int y) {
@@ -104,7 +105,12 @@ public class Main8 {
         }
 
         public State clone() {
-            return new State(idx, rx, ry, bx, by, time);
+            try {
+                return (State) super.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
@@ -166,7 +172,7 @@ public class Main8 {
                     if (!ns.hasRed()) return ns.time;
                     else if (ns.time < MAX_TIME) bfsQ.offer(ns);
                 }
-                s = s.rotate();
+                s.rotate();
             }
         }
 
