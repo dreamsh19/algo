@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class Main8 {
@@ -18,19 +20,6 @@ public class Main8 {
         int idx;
         int rx, ry, bx, by;
         int time;
-
-        State() {
-
-        }
-
-        State(int idx, int rx, int ry, int bx, int by, int time) {
-            this.idx = idx;
-            this.rx = rx;
-            this.ry = ry;
-            this.bx = bx;
-            this.by = by;
-            this.time = time;
-        }
 
         void setRed(int x, int y) {
             rx = x;
@@ -114,6 +103,23 @@ public class Main8 {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            State state = (State) o;
+            return idx == state.idx &&
+                    rx == state.rx &&
+                    ry == state.ry &&
+                    bx == state.bx &&
+                    by == state.by;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(idx, rx, ry, bx, by);
+        }
+
+        @Override
         public String toString() {
             return "State{" +
                     "idx=" + idx +
@@ -124,15 +130,18 @@ public class Main8 {
                     ", time=" + time +
                     '}';
         }
+
+
     }
 
-    //
     void getRotates() {
-        for (int i = 0; i < 3; i++) {
-            char[][] tmp = transpose(matrices[i]);
-            flip(tmp);
-            matrices[i + 1] = tmp;
-        }
+        for (int i = 0; i < 3; i++) rotate(i);
+    }
+
+    void rotate(int i) {
+        char[][] tmp = transpose(matrices[i]);
+        flip(tmp);
+        matrices[i + 1] = tmp;
     }
 
     char[][] transpose(char[][] matrix) {
@@ -162,7 +171,11 @@ public class Main8 {
         State initialState = getInitialState();
         getRotates();
         Queue<State> bfsQ = new LinkedList<>();
+        HashSet<State> stateSet = new HashSet<>();
+
         bfsQ.offer(initialState);
+        stateSet.add(initialState);
+
         while (!bfsQ.isEmpty()) {
             State s = bfsQ.poll();
             for (int i = 0; i < 4; i++) {
@@ -170,7 +183,10 @@ public class Main8 {
                 ns.pushDown();
                 if (ns.hasBlue()) {
                     if (!ns.hasRed()) return ns.time;
-                    else if (ns.time < MAX_TIME) bfsQ.offer(ns);
+                    else if (!stateSet.contains(ns) && ns.time < MAX_TIME) {
+                        bfsQ.offer(ns);
+                        stateSet.add(ns);
+                    }
                 }
                 s.rotate();
             }
