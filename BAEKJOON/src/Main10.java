@@ -1,49 +1,46 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 public class Main10 {
+
     int N;
     int[][] S;
-    int min;
 
-    void combination(int[] arr, int[] result, int startIdx, int r) {
-        int n = arr.length;
+    int combination(int n, int[] result, int startIdx, int r) {
         int resultIdx = result.length - r;
         if (startIdx == n - r) {
-            System.arraycopy(arr, startIdx, result, resultIdx, r);
+            for (int i = startIdx; i < n; i++) result[resultIdx++] = i;
             r = 0;
         }
-        if (r == 0) {
-            min = Math.min(min, getDiff(result));
-            return;
-        }
-        result[resultIdx] = arr[startIdx];
-        combination(arr, result, startIdx + 1, r - 1);
-        combination(arr, result, startIdx + 1, r);
+        if (r == 0) return getDiff(result);
+
+        result[resultIdx] = startIdx;
+        return Math.min(combination(n, result, startIdx + 1, r - 1),
+                combination(n, result, startIdx + 1, r));
 
     }
 
 
     int getDiff(int[] combination) {
+
         int n = combination.length;
-        int combIdx = 0;
-        int[] diff = new int[n];
-        int diffIdx = 0;
-        for (int i = 0; i < N; i++) {
-            if (combIdx == n || i != combination[combIdx]) {
-                diff[diffIdx++] = i;
-            } else {
-                combIdx++;
-            }
+        int[] complement = new int[n];
+        int idx = 0;
+        int num = 0;
+        for (int c : combination) {
+            while (num < c) complement[idx++] = num++;
+            num = c + 1;
         }
+        while (idx < n) complement[idx++] = num++;
+
         int sum = 0;
-        for(int i :combination){
-            for(int j : combination) sum+=S[i][j];
+        for (int i : combination) {
+            for (int j : combination) sum += S[i][j];
         }
-        for(int i : diff){
-            for(int j : diff) sum-=S[i][j];
+
+        for (int i : complement) {
+            for (int j : complement) sum -= S[i][j];
         }
 
         return Math.abs(sum);
@@ -51,30 +48,26 @@ public class Main10 {
     }
 
     int solution() {
-
-        min = Integer.MAX_VALUE;
-        int[] arr = new int[N];
-        for (int i = 0; i < N; i++) {
-            arr[i] = i;
-        }
         int r = N / 2;
-        combination(arr, new int[r], 0, r);
-        return min;
+        return combination(N, new int[r], 0, r);
     }
 
-    void getInput() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        S = new int[N][N];
-        for (int i = 0; i < N; i++) {
-            String[] line = br.readLine().split(" ");
-            for (int j = 0; j < N; j++) S[i][j] = Integer.parseInt(line[j]);
+    void getInput() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            N = Integer.parseInt(br.readLine());
+            S = new int[N][N];
+            for (int i = 0; i < N; i++) {
+                String[] line = br.readLine().split(" ");
+                for (int j = 0; j < N; j++) S[i][j] = Integer.parseInt(line[j]);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
-
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Main10 m = new Main10();
         m.getInput();
         int ans = m.solution();
