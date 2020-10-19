@@ -2,7 +2,8 @@ import java.util.HashSet;
 
 public class Solution28 {
 
-    HashSet<Integer> numSet;
+    HashSet<String> permutationResult;
+    HashSet<Integer> primeSet;
 
     boolean isPrime(int n) {
 
@@ -13,47 +14,36 @@ public class Solution28 {
         return n > 1;
     }
 
-    String swap(String s, int i, int j) {
-        char[] arr = s.toCharArray();
+    void permutation(char[] arr, int l) {
+        String result = new String(arr).substring(0, l);
+        permutationResult.add(result);
+
+        if (l == arr.length) return;
+
+        for (int i = l; i <= arr.length - 1; i++) {
+            swap(arr, l, i);
+            permutation(arr, l + 1);
+            swap(arr, l, i);
+        }
+    }
+
+    void swap(char[] arr, int i, int j) {
         char tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
-        return new String(arr);
-    }
-
-    void permute(String s, int l, int r) {
-        if (l == r) {
-            int i = Integer.parseInt(s);
-            if (isPrime(i)) numSet.add(i);
-        } else {
-            for (int i = l; i <= r; i++) {
-                permute(swap(s, l, i), l + 1, r);
-            }
-        }
     }
 
     public int solution(String numbers) {
-        int len = numbers.length();
+        permutationResult = new HashSet<>();
+        permutation(numbers.toCharArray(), 0);
+        permutationResult.remove("");
 
-        char[] cards = numbers.toCharArray();
-        HashSet<String> combSet = new HashSet<>();
-        numSet = new HashSet<>();
+        primeSet = new HashSet<>();
+        for(String s : permutationResult){
+            int num = Integer.parseInt(s);
+            if(isPrime(num)) primeSet.add(num);
+        }
 
-        int top = 1 << len;
-        for (int mask = 1; mask < top; mask++) {
-            String s = "";
-            int bit = 1;
-            for (int digit = 0; digit < len; digit++) {
-                if ((mask & bit) > 0) {
-                    s += cards[digit];
-                }
-                bit <<= 1;
-            }
-            combSet.add(s);
-        }
-        for (String s : combSet) {
-            permute(s, 0, s.length() - 1);
-        }
-        return numSet.size();
+        return primeSet.size();
     }
 }
