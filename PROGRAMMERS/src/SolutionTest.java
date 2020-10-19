@@ -297,14 +297,14 @@ public class SolutionTest {
 //            System.out.println();
 //        }
 
-//        // Solution28
-//        T = 2;
-//        String[] numbers = {"17","011"};
-//        for (int i = 0; i < T; i++) {
-//            Solution28 sol = new Solution28();
-//            int ans = sol.solution(numbers[i]);
-//            System.out.println(ans);
-//        }
+        // Solution28
+        T = 2;
+        String[] numbers = {"17","011"};
+        for (int i = 0; i < T; i++) {
+            Solution28 sol = new Solution28();
+            int ans = sol.solution(numbers[i]);
+            System.out.println(ans);
+        }
 
 //        // Solution29
 //        T = 2;
@@ -379,14 +379,14 @@ public class SolutionTest {
 //            System.out.println(ans);
 //        }
 
-        // Solution36
-        T = 4   ;
-        int[][] money = {{1, 2, 3, 1}, {3, 3, 3}, {1, 5, 1}, {1, 1, 5}};
-        for (int i = 0; i < T; i++) {
-            Solution36 sol = new Solution36();
-            int ans = sol.solution(money[i]);
-            System.out.println(ans);
-        }
+//        // Solution36
+//        T = 4   ;
+//        int[][] money = {{1, 2, 3, 1}, {3, 3, 3}, {1, 5, 1}, {1, 1, 5}};
+//        for (int i = 0; i < T; i++) {
+//            Solution36 sol = new Solution36();
+//            int ans = sol.solution(money[i]);
+//            System.out.println(ans);
+//        }
 
     }
 
