@@ -3,18 +3,12 @@ import java.util.Stack;
 
 public class Solution2 {
     public String solution(String p) {
-        String answer = "";
         if (p.isEmpty()) return p;
 
         int count = 0;
         int i;
         for (i = 0; i < p.length(); i++) {
-            if (p.charAt(i) == '(') {
-                count++;
-            } else {
-                count--;
-            }
-            if (count == 0) break;
+            if ((count += p.charAt(i) == '(' ? 1 : -1) == 0) break;
         }
         String u = p.substring(0, i + 1);
         String v = p.substring(i + 1);
@@ -22,25 +16,18 @@ public class Solution2 {
         if (isCorrect(u)) {
             return u + solution(v);
         } else {
-            answer = "(" + solution(v) + ")";
-            for (int idx = 1; idx < u.length() - 1; idx++) {
-                if (u.charAt(idx) == '(') {
-                    answer += ')';
-                } else {
-                    answer += '(';
-                }
-            }
+            String answer = "(" + solution(v) + ")";
+            u = u.substring(1, u.length() - 1);
+            for (char c : u.toCharArray()) answer += c == '(' ? ')' : '(';
             return answer;
         }
-
-
     }
 
-    public static boolean isCorrect(String p) {
-        Stack<Character> stack = new Stack<Character>();
+    public boolean isCorrect(String p) {
+        Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < p.length(); i++) {
-            if (p.charAt(i) == '(') {
+        for (char c : p.toCharArray()) {
+            if (c == '(') {
                 stack.push('(');
             } else {
                 try {
@@ -51,12 +38,5 @@ public class Solution2 {
             }
         }
         return stack.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        String p = "()(())()";
-        Solution2 sol = new Solution2();
-        String ans = sol.solution(p);
-        System.out.println(ans);
     }
 }
