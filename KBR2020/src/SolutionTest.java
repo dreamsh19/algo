@@ -48,12 +48,22 @@ public class SolutionTest {
 //            for (int[] a : answer) print(a);
 //        }
 
-        //Solution5
-        T = 1;
-        String[][] words = {{"frodo", "front", "frost", "frozen", "frame", "kakao"}};
-        String[][] queries = {{"fram?","fro??", "????o", "fr???", "fro???", "pro?","froze?"}};
-        Solution5 s = new Solution5();
-        for (int i = 0; i < T; i++) print(s.solution_(words[i], queries[i]));
+//        //Solution5
+//        T = 1;
+//        String[][] words = {{"frodo", "front", "frost", "frozen", "frame", "kakao"}};
+//        String[][] queries = {{"fram?","fro??", "????o", "fr???", "fro???", "pro?","froze?"}};
+//        Solution5 s = new Solution5();
+//        for (int i = 0; i < T; i++) print(s.solution_(words[i], queries[i]));
+//
+
+        //Solution6
+        T = 2;
+        int[] n = {12, 12};
+        int[][] weak = {{1, 5, 6, 10}, {1, 3, 4, 9, 10}};
+        int[][] dist = {{1, 2, 3, 4}, {3, 5, 7}};
+        Solution6 s = new Solution6();
+        for (int i = 0; i < T; i++) print(s.solution(n[i], weak[i], dist[i]));
+
 
     }
 }
