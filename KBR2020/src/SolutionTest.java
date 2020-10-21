@@ -35,19 +35,25 @@ public class SolutionTest {
 //        for (int i = 0; i < T; i++) print(s.solution(key[i], lock[i]));
 //
 
-        //Solution4
-        T = 2;
-        int[] n = {5, 5};
-        int[][][] build_frame = {
-                {{1, 0, 0, 1}, {1, 1, 1, 1}, {2, 1, 0, 1}, {2, 2, 1, 1}, {5, 0, 0, 1}, {5, 1, 0, 1}, {4, 2, 1, 1}, {3, 2, 1, 1}},
-                {{0, 0, 0, 1}, {2, 0, 0, 1}, {4, 0, 0, 1}, {0, 1, 1, 1}, {1, 1, 1, 1}, {2, 1, 1, 1}, {3, 1, 1, 1}, {2, 0, 0, 0}, {1, 1, 1, 0}, {2, 2, 0, 1}}
-        };
-        Solution4 s = new Solution4();
-        for (int i = 0; i < T; i++) {
-            int[][] answer = s.solution(n[i], build_frame[i]);
-            for (int[] a : answer) print(a);
-        }
+//        //Solution4
+//        T = 2;
+//        int[] n = {5, 5};
+//        int[][][] build_frame = {
+//                {{1, 0, 0, 1}, {1, 1, 1, 1}, {2, 1, 0, 1}, {2, 2, 1, 1}, {5, 0, 0, 1}, {5, 1, 0, 1}, {4, 2, 1, 1}, {3, 2, 1, 1}},
+//                {{0, 0, 0, 1}, {2, 0, 0, 1}, {4, 0, 0, 1}, {0, 1, 1, 1}, {1, 1, 1, 1}, {2, 1, 1, 1}, {3, 1, 1, 1}, {2, 0, 0, 0}, {1, 1, 1, 0}, {2, 2, 0, 1}}
+//        };
+//        Solution4 s = new Solution4();
+//        for (int i = 0; i < T; i++) {
+//            int[][] answer = s.solution(n[i], build_frame[i]);
+//            for (int[] a : answer) print(a);
+//        }
 
+        //Solution5
+        T = 1;
+        String[][] words = {{"frodo", "front", "frost", "frozen", "frame", "kakao"}};
+        String[][] queries = {{"fro??", "????o", "fr???", "fro???", "pro?"}};
+        Solution5 s = new Solution5();
+        for (int i = 0; i < T; i++) print(s.solution(words[i], queries[i]));
 
     }
 }
