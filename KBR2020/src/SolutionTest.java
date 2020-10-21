@@ -51,9 +51,9 @@ public class SolutionTest {
         //Solution5
         T = 1;
         String[][] words = {{"frodo", "front", "frost", "frozen", "frame", "kakao"}};
-        String[][] queries = {{"fro??", "????o", "fr???", "fro???", "pro?"}};
+        String[][] queries = {{"fram?","fro??", "????o", "fr???", "fro???", "pro?","froze?"}};
         Solution5 s = new Solution5();
-        for (int i = 0; i < T; i++) print(s.solution(words[i], queries[i]));
+        for (int i = 0; i < T; i++) print(s.solution_(words[i], queries[i]));
 
     }
 }
