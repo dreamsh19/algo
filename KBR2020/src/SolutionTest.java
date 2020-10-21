@@ -56,13 +56,19 @@ public class SolutionTest {
 //        for (int i = 0; i < T; i++) print(s.solution_(words[i], queries[i]));
 //
 
-        //Solution6
-        T = 2;
-        int[] n = {12, 12};
-        int[][] weak = {{1, 5, 6, 10}, {1, 3, 4, 9, 10}};
-        int[][] dist = {{1, 2, 3, 4}, {3, 5, 7}};
-        Solution6 s = new Solution6();
-        for (int i = 0; i < T; i++) print(s.solution(n[i], weak[i], dist[i]));
+//        //Solution6
+//        T = 2;
+//        int[] n = {12, 12};
+//        int[][] weak = {{1, 5, 6, 10}, {1, 3, 4, 9, 10}};
+//        int[][] dist = {{1, 2, 3, 4}, {3, 5, 7}};
+//        Solution6 s = new Solution6();
+//        for (int i = 0; i < T; i++) print(s.solution(n[i], weak[i], dist[i]));
+
+        //Solution7
+        T = 1;
+        int[][][] board = {{{0, 0, 0, 1, 1}, {0, 0, 0, 1, 0}, {0, 1, 0, 1, 1}, {1, 1, 0, 0, 1}, {0, 0, 0, 0, 0}}};
+        Solution7 s = new Solution7();
+        for (int i = 0; i < T; i++) print(s.solution(board[i]));
 
 
     }
