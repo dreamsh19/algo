@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 
 class Solution5 {
@@ -75,6 +76,7 @@ class Solution5 {
         db = new HashMap<Integer, Node>();
         db_reverse = new HashMap<Integer, Node>();
 
+
         for (String word : words) {
             addToDB(word, false);
             addToDB(reverse(word), true);
@@ -82,9 +84,83 @@ class Solution5 {
         for (String q : queries) {
             answer[ans_idx++] = getCount(q);
         }
-
         return answer;
     }
 
+
+    static final char BEFORE_A = 'a' - 1, AFTER_Z = 'z' + 1;
+    myString[] db_;
+    myString[] db_reverse_;
+    int n;
+
+    class myString implements Comparable<myString> {
+
+        String s;
+        int length;
+
+        myString(String s) {
+            this.s = s;
+            length = s.length();
+        }
+
+        @Override
+        public int compareTo(myString o) {
+            return length == o.length ? s.compareTo(o.s) : length - o.length;
+        }
+
+        @Override
+        public String toString() {
+            return s;
+        }
+    }
+
+    int findString(myString[] db, String s) {
+        myString target = new myString(s);
+        int l = 0, r = n - 1;
+        int idx = n;
+        while (l <= r) {
+            int m = (l + r) / 2;
+            if (target.compareTo(db[m]) > 0) {
+                l = m + 1;
+            } else {
+                idx = m;
+                r = m - 1;
+            }
+        }
+        return idx;
+    }
+
+    int getCount_(String q) {
+        boolean isPostfix = q.endsWith("?");
+
+        myString[] db = isPostfix ? db_ : db_reverse_;
+        q = isPostfix ? q : reverse(q);
+
+        int start = findString(db, q.replace('?', BEFORE_A));
+        int end = findString(db, q.replace('?', AFTER_Z));
+
+        return end - start;
+    }
+
+
+    public int[] solution_(String[] words, String[] queries) {
+        n = words.length;
+
+        db_ = new myString[n];
+        db_reverse_ = new myString[n];
+        for (int i = 0; i < n; i++) {
+            db_[i] = new myString(words[i]);
+            db_reverse_[i] = new myString(reverse(words[i]));
+        }
+        Arrays.sort(db_);
+        Arrays.sort(db_reverse_);
+
+        int[] answer = new int[queries.length];
+        int ans_idx = 0;
+        for (String q : queries) {
+            answer[ans_idx++] = getCount_(q);
+        }
+        return answer;
+    }
 }
 
