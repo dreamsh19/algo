@@ -1,12 +1,9 @@
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 class Solution6 {
     int numPoints;
     int[] diff;
-    HashSet<ArrayList<Integer>> permutations;
-
+    
     int nextIdx(int worker, int from) {
         int sum = 0;
         int i;
@@ -17,17 +14,34 @@ class Solution6 {
         return numPoints;
     }
 
+    boolean canFixAll(int[] dist, int r) {
+        for (int shift = 0; shift < numPoints; shift++) {
+            int idx = 0;
+            for (int i = 0; i <= r; i++) {
+                if ((idx = nextIdx(dist[i], idx)) == numPoints) return true;
+            }
+            shift(diff);
+        }
+        return false;
+    }
 
-    void permute(ArrayList<Integer> dist, int l, int r) {
-        if (l == r) {
-            permutations.add((ArrayList<Integer>) dist.clone());
+    boolean permute(int[] dist, int l, int r) {
+        if (l >= r) {
+            return canFixAll(dist, r);
         } else {
             for (int i = l; i <= r; i++) {
-                Collections.swap(dist, l, i);
-                permute(dist, l + 1, r);
-                Collections.swap(dist, l, i);
+                swap(dist, l, i);
+                if (permute(dist, l + 1, r)) return true;
+                swap(dist, l, i);
             }
+            return false;
         }
+    }
+
+    void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     void shift(int[] arr) {
@@ -41,11 +55,9 @@ class Solution6 {
 
     public int solution(int n, int[] weak, int[] dist) {
         numPoints = weak.length;
-        ArrayList<Integer> totalWorkers = new ArrayList<>();
-        for (int d : dist) {
-            totalWorkers.add(d);
-        }
-        Collections.sort(totalWorkers, Collections.reverseOrder());
+        int numWorkers = dist.length;
+        Arrays.sort(dist);
+        for (int i = 0; i <= (numWorkers / 2 - 1); i++) swap(dist, i, numWorkers - 1 - i);
 
         diff = new int[numPoints];
 
@@ -54,22 +66,8 @@ class Solution6 {
         }
         diff[numPoints - 1] = n + weak[0] - weak[numPoints - 1];
 
-        ArrayList<Integer> workingList = new ArrayList<>();
-        for (int workerNum = 0; workerNum < dist.length; workerNum++) {
-            workingList.add(totalWorkers.get(workerNum));
-            permutations = new HashSet<>();
-            permute(workingList, 0, workerNum);
-            for (int shiftCount = 0; shiftCount < numPoints; shiftCount++) {
-                for (ArrayList<Integer> workers : permutations) {
-                    int idx = 0;
-                    for (int worker : workers) {
-                        idx = nextIdx(worker, idx);
-                        if (idx == numPoints) return workerNum + 1;
-                    }
-
-                }
-                shift(diff);
-            }
+        for (int workerNum = 0; workerNum < numWorkers; workerNum++) {
+            if (permute(dist, 1, workerNum)) return workerNum + 1;
         }
 
         return -1;
