@@ -3,24 +3,23 @@ import java.util.Arrays;
 class Solution6 {
     int numPoints;
     int[] diff;
-    
-    int nextIdx(int worker, int from) {
+
+    int nextIdx(int worker, int from, int end) {
         int sum = 0;
-        int i;
-        for (i = from; i < numPoints; i++) {
+        for (int i = from; i < end; i++) {
             sum += diff[i];
             if (sum > worker) return i + 1;
         }
-        return numPoints;
+        return end;
     }
 
     boolean canFixAll(int[] dist, int r) {
-        for (int shift = 0; shift < numPoints; shift++) {
-            int idx = 0;
+        for (int diffHead = 0; diffHead < numPoints; diffHead++) {
+            int start = diffHead;
+            int end = start + numPoints;
             for (int i = 0; i <= r; i++) {
-                if ((idx = nextIdx(dist[i], idx)) == numPoints) return true;
+                if ((start = nextIdx(dist[i], start, end)) == end) return true;
             }
-            shift(diff);
         }
         return false;
     }
@@ -44,13 +43,15 @@ class Solution6 {
         arr[j] = tmp;
     }
 
-    void shift(int[] arr) {
-        int tmp = arr[0];
-        int i;
-        for (i = 0; i < arr.length - 1; i++) {
-            arr[i] = arr[i + 1];
+    void getDiff(int n, int[] weak) {
+        diff = new int[2 * numPoints];
+
+        for (int i = 0; i < numPoints - 1; i++) {
+            diff[i] = weak[i + 1] - weak[i];
         }
-        arr[i] = tmp;
+        diff[numPoints - 1] = n + weak[0] - weak[numPoints - 1];
+        System.arraycopy(diff, 0, diff, numPoints, numPoints);
+
     }
 
     public int solution(int n, int[] weak, int[] dist) {
@@ -59,12 +60,7 @@ class Solution6 {
         Arrays.sort(dist);
         for (int i = 0; i <= (numWorkers / 2 - 1); i++) swap(dist, i, numWorkers - 1 - i);
 
-        diff = new int[numPoints];
-
-        for (int i = 0; i < numPoints - 1; i++) {
-            diff[i] = weak[i + 1] - weak[i];
-        }
-        diff[numPoints - 1] = n + weak[0] - weak[numPoints - 1];
+        getDiff(n, weak);
 
         for (int workerNum = 0; workerNum < numWorkers; workerNum++) {
             if (permute(dist, 1, workerNum)) return workerNum + 1;
