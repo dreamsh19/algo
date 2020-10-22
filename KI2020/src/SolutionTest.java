@@ -33,12 +33,22 @@ public class SolutionTest {
 //        }
 
 
-        T = 1;
-        String[][] gems = {{"DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"}};
+//        T = 1;
+//        String[][] gems = {{"DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"}};
+//
+//        Solution3 s = new Solution3();
+//        for (int i = 0; i < T; i++) {
+//            print(s.solution(gems[i]));
+//        }
 
-        Solution3 s = new Solution3();
-        for (int i = 0; i < T; i++) {
-            print(s.solution(gems[i]));
+        T = 2;
+        int[][][] board = {{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+                {{0, 0, 1, 0}, {0, 0, 0, 0}, {0, 1, 0, 1}, {1, 0, 0, 0}}};
+
+        Solution4 s = new Solution4();
+        for (int i = 1; i < T; i++) {
+            print(s.solution(board[i]));
         }
+
     }
 }
