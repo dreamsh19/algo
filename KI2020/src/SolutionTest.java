@@ -10,7 +10,7 @@ public class SolutionTest {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int T;
 
 //        T = 2;
@@ -41,13 +41,23 @@ public class SolutionTest {
 //            print(s.solution(gems[i]));
 //        }
 
-        T = 2;
-        int[][][] board = {{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-                {{0, 0, 1, 0}, {0, 0, 0, 0}, {0, 1, 0, 1}, {1, 0, 0, 0}}};
+//        T = 2;
+//        int[][][] board = {{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+//                {{0, 0, 1, 0}, {0, 0, 0, 0}, {0, 1, 0, 1}, {1, 0, 0, 0}}};
+//
+//        Solution4 s = new Solution4();
+//        for (int i = 1; i < T; i++) {
+//            print(s.solution(board[i]));
+//        }
 
-        Solution4 s = new Solution4();
-        for (int i = 1; i < T; i++) {
-            print(s.solution(board[i]));
+
+        T = 3;
+        int[] n = {9};
+        int[][][] path = {{{0, 1}, {0, 3}, {0, 7}, {8, 1}, {3, 6}, {1, 2}, {4, 7}, {7, 5}}};
+        int[][][] order = {{{8, 5}, {6, 7}, {4, 1}}, {{4, 1}, {5, 2}}, {{4, 1}, {8, 7}, {6, 5}}};
+        Solution5 s = new Solution5();
+        for (int i = 0; i < T; i++) {
+            print(s.solution(n[0], path[0], order[i]));
         }
 
     }
