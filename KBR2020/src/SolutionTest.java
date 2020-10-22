@@ -68,7 +68,7 @@ public class SolutionTest {
         T = 1;
         int[][][] board = {{{0, 0, 0, 1, 1}, {0, 0, 0, 1, 0}, {0, 1, 0, 1, 1}, {1, 1, 0, 0, 1}, {0, 0, 0, 0, 0}}};
         Solution7 s = new Solution7();
-        for (int i = 0; i < T; i++) print(s.solution(board[i]));
+        for (int i = 0; i < T; i++) print(s.solution_(board[i]));
 
 
     }
