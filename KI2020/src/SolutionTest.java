@@ -24,12 +24,21 @@ public class SolutionTest {
 //        }
 
 
-        T = 2;
-        String[] expression = {"100-200*300-500+20", "50*6-3*2"};
+//        T = 2;
+//        String[] expression = {"100-200*300-500+20", "50*6-3*2"};
+//
+//        Solution2 s = new Solution2();
+//        for (int i = 0; i < T; i++) {
+//            print(s.solution(expression[i]));
+//        }
 
-        Solution2 s = new Solution2();
+
+        T = 1;
+        String[][] gems = {{"DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"}};
+
+        Solution3 s = new Solution3();
         for (int i = 0; i < T; i++) {
-            print(s.solution(expression[i]));
+            print(s.solution(gems[i]));
         }
     }
 }
