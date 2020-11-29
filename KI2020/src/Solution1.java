@@ -1,36 +1,21 @@
 public class Solution1 {
 
-    static final int[][] phone = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 0, 11}};
     int left_x, left_y, right_x, right_y;
     boolean isLeftHanded;
+    int[] x, y;
 
-
-    int getX(int number) {
-        return number == 0 ? 3 : (number - 1) / 3;
-    }
-
-    int getY(int number) {
-        return number == 0 ? 1 : (number - 1) % 3;
-    }
-
-    char operation(int number) {
+    char moveHandTo(int number) {
         char hand;
-        int nx = getX(number);
-        int ny = getY(number);
-        if (ny == 0) {
-            hand = 'L';
-        } else if (ny == 2) {
-            hand = 'R';
-        } else {
+        int nx = x[number];
+        int ny = y[number];
+        if (ny == 0) hand = 'L';
+        else if (ny == 2) hand = 'R';
+        else {
             int distL = Math.abs(nx - left_x) + Math.abs(ny - left_y);
             int distR = Math.abs(nx - right_x) + Math.abs(ny - right_y);
-            if (distL > distR) {
-                hand = 'R';
-            } else if (distL < distR) {
-                hand = 'L';
-            } else {
-                hand = isLeftHanded ? 'L' : 'R';
-            }
+            if (distL > distR) hand = 'R';
+            else if (distL < distR) hand = 'L';
+            else hand = isLeftHanded ? 'L' : 'R';
         }
         if (hand == 'L') {
             left_x = nx;
@@ -39,20 +24,34 @@ public class Solution1 {
             right_x = nx;
             right_y = ny;
         }
-//        System.out.println(phone[left_x][left_y]+" "+phone[right_x][right_y]);
         return hand;
+    }
+
+    void getXY() {
+        x = new int[10];
+        y = new int[10];
+        x[0] = 3;
+        y[0] = 1;
+        int num = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                x[num] = i;
+                y[num] = j;
+                num++;
+            }
+        }
     }
 
     public String solution(int[] numbers, String hand) {
         String answer = "";
-        isLeftHanded = hand.equals("left");
+        getXY();
         left_x = 3;
         left_y = 0;
         right_x = 3;
         right_y = 2;
-        for (int n : numbers) {
-            answer += operation(n);
-        }
+        isLeftHanded = hand.equals("left");
+        for (int n : numbers) answer += moveHandTo(n);
+
         return answer;
     }
 

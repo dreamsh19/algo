@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 2;
+    static final int SOLUTION_NUMBER = 1;
 
     static void print(Object o) {
         if (o instanceof int[]) {
