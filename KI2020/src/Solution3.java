@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.PriorityQueue;
 
 public class Solution3 {
     public int[] solution(String[] gems) {
@@ -14,23 +13,24 @@ public class Solution3 {
             lastIdx.put(gems[i], i);
             if (lastIdx.size() == numGem) break;
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
         int max = 0, min = n;
         for (int idx : lastIdx.values()) {
-            pq.add(idx);
             max = Math.max(max, idx);
             min = Math.min(min, idx);
         }
         int len = max - min;
+        int values_min = min;
         for (++i; i < n; i++) {
-            int idx = lastIdx.get(gems[i]);
-            pq.remove(idx);
-            pq.add(i);
+            int preIdx = lastIdx.get(gems[i]);
             lastIdx.put(gems[i], i);
-            if (i - pq.peek() < len) {
-                max = i;
-                min = pq.peek();
-                len = max - min;
+            if (values_min == preIdx) {
+                values_min = n;
+                for (int v : lastIdx.values()) values_min = Math.min(values_min, v);
+                if (i - values_min < len) {
+                    max = i;
+                    min = values_min;
+                    len = max - min;
+                }
             }
         }
 
