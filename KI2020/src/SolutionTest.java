@@ -41,7 +41,7 @@ public class SolutionTest {
 
             Solution3 s = new Solution3();
             for (int i = 0; i < T; i++) {
-                print(s.solution(gems[i]));
+                print(s.solution_(gems[i]));
             }
         } else if (SOLUTION_NUMBER == 4) {
             T = 2;

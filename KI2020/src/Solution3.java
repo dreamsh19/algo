@@ -36,5 +36,37 @@ public class Solution3 {
 
         return new int[]{min + 1, max + 1};
     }
+
+    public int[] solution_(String[] gems) {
+        HashSet<String> gemSet = new HashSet<>();
+        for (String gem : gems) gemSet.add(gem);
+        int numGem = gemSet.size();
+        int n = gems.length;
+        HashMap<String, Integer> gemCount = new HashMap<>();
+        int left = 0, right = 0;
+        int ans_left = left, ans_right = right;
+        int len = n;
+        for (; right < n; right++) {
+            String gem = gems[right];
+            int cnt = gemCount.getOrDefault(gem, 0);
+            gemCount.put(gem, cnt + 1);
+
+            while (gemCount.size() == numGem) {
+                String gemLeft = gems[left];
+                cnt = gemCount.get(gemLeft);
+                gemCount.put(gemLeft, --cnt);
+                if (cnt == 0) {
+                    gemCount.remove(gemLeft);
+                    if (right - left < len) {
+                        len = right - left;
+                        ans_left = left;
+                        ans_right = right;
+                    }
+                }
+                left++;
+            }
+        }
+        return new int[]{ans_left + 1, ans_right + 1};
+    }
 }
 
