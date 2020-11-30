@@ -17,13 +17,14 @@ public class Solution2 {
 
         LinkedList<Long> result = new LinkedList<>();
         Iterator<Long> it = arr.iterator();
-
+        boolean isOperator = false;
         while (it.hasNext()) {
             long item = it.next();
-            if (item == operator) {
+            if (isOperator && item == operator) {
                 result.add(calculate(result.removeLast(), it.next(), operator));
             } else {
                 result.add(item);
+                isOperator ^= true;
             }
         }
         return result;
