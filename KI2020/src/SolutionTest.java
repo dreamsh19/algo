@@ -27,8 +27,8 @@ public class SolutionTest {
             }
         } else if (SOLUTION_NUMBER == 2) {
 
-            T = 2;
-            String[] expression = {"100-200*300-500+20", "50*6-3*2"};
+            T = 3;
+            String[] expression = {"100-200*300-500+20", "50*6-3*2","42*42"};
 
             Solution2 s = new Solution2();
             for (int i = 0; i < T; i++) {
