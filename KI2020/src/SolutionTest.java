@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 3;
+    static final int SOLUTION_NUMBER = 4;
 
     static void print(Object o) {
         if (o instanceof int[]) {
@@ -49,7 +49,7 @@ public class SolutionTest {
                     {{0, 0, 1, 0}, {0, 0, 0, 0}, {0, 1, 0, 1}, {1, 0, 0, 0}}};
 
             Solution4 s = new Solution4();
-            for (int i = 1; i < T; i++) {
+            for (int i = 0; i < T; i++) {
                 print(s.solution(board[i]));
             }
         } else if (SOLUTION_NUMBER == 5) {
