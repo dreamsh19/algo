@@ -4,63 +4,86 @@ import java.util.Queue;
 public class Solution5 {
 
     Node[] nodes;
+    Node root;
+    int n;
 
     class Node {
-        LinkedList<Integer> adjList;
-        LinkedList<Integer> childList;
-        int numParent;
+        LinkedList<Node> adjList;
+        boolean visited;
+
+        LinkedList<Node> outList;
+        int inDegree;
 
         Node() {
             adjList = new LinkedList<>();
-            childList = new LinkedList<>();
+            outList = new LinkedList<>();
+            inDegree = 0;
+            visited = false;
+        }
 
+        void addOutEdge(Node dest) {
+            outList.add(dest);
+            dest.inDegree++;
         }
     }
 
-    public boolean solution(int n, int[][] path, int[][] order) {
+    void init(int n, int rootIdx) {
+        this.n = n;
         nodes = new Node[n];
         for (int i = 0; i < n; i++) nodes[i] = new Node();
-        for (int[] p : path) {
-            int from = p[0];
-            int to = p[1];
-            nodes[from].adjList.add(to);
-            nodes[to].adjList.add(from);
-        }
+        root = nodes[rootIdx];
+    }
 
-        Queue<Node> bfsQ = new LinkedList<>();
-        boolean[] visited = new boolean[n];
-        visited[0] = true;
-        bfsQ.offer(nodes[0]);
-        while (!bfsQ.isEmpty()) {
-            Node node = bfsQ.poll();
-            for (int adj : node.adjList) {
-                if (!visited[adj]) {
-                    visited[adj] = true;
-                    node.childList.add(adj);
-                    nodes[adj].numParent++;
-                    bfsQ.offer(nodes[adj]);
-                }
+    void dfs(Node start) {
+        start.visited = true;
+        for (Node adj : start.adjList) {
+            if (!adj.visited) {
+                start.addOutEdge(adj);
+                dfs(adj);
             }
         }
+    }
+
+    void getDirectedGraph(int[][] order) {
+        dfs(root);
 
         for (int[] o : order) {
-            int pre = o[0];
-            int post = o[1];
-            nodes[pre].childList.add(post);
-            nodes[post].numParent++;
+            Node pre = nodes[o[0]];
+            Node post = nodes[o[1]];
+            pre.addOutEdge(post);
         }
+    }
 
-        Queue<Integer> q = new LinkedList<>();
-        if (nodes[0].numParent == 0) q.offer(0);
+    boolean topologicalSortable() {
+        Queue<Node> q = new LinkedList<>();
+        if (root.inDegree == 0) q.offer(root);
 
         int count = 0;
         while (!q.isEmpty()) {
-            int next = q.poll();
-            for (int child : nodes[next].childList) {
-                if (--nodes[child].numParent == 0) q.offer(child);
-            }
+            Node node = q.poll();
             count++;
+            for (Node child : node.outList) {
+                if (--child.inDegree == 0) q.offer(child);
+            }
         }
-        return count == n;
+        return count == n; // count < n : has cycle = cannot topologicalSort
+    }
+
+
+    public boolean solution(int n, int[][] path, int[][] order) {
+
+        final int ROOT_IDX = 0;
+        init(n, ROOT_IDX);
+
+        for (int[] p : path) {
+            Node from = nodes[p[0]];
+            Node to = nodes[p[1]];
+            from.adjList.add(to);
+            to.adjList.add(from);
+        }
+
+        getDirectedGraph(order);
+
+        return topologicalSortable();
     }
 }
