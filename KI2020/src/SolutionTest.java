@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 2;
+    static final int SOLUTION_NUMBER = 5;
 
     static void print(Object o) {
         if (o instanceof int[]) {
@@ -54,10 +54,10 @@ public class SolutionTest {
             }
         } else if (SOLUTION_NUMBER == 5) {
 
-            T = 3;
+            T = 4;
             int[] n = {9};
             int[][][] path = {{{0, 1}, {0, 3}, {0, 7}, {8, 1}, {3, 6}, {1, 2}, {4, 7}, {7, 5}}};
-            int[][][] order = {{{8, 5}, {6, 7}, {4, 1}}, {{4, 1}, {5, 2}}, {{4, 1}, {8, 7}, {6, 5}}};
+            int[][][] order = {{{8, 5}, {6, 7}, {4, 1}}, {{4, 1}, {5, 2}}, {{4, 1}, {8, 7}, {6, 5}},{{5,0}}};
             Solution5 s = new Solution5();
             for (int i = 0; i < T; i++) {
                 print(s.solution(n[0], path[0], order[i]));

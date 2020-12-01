@@ -1,17 +1,18 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Solution5 {
 
     Node[] nodes;
 
     class Node {
-        ArrayList<Integer> adjList;
-        ArrayList<Integer> childList;
+        LinkedList<Integer> adjList;
+        LinkedList<Integer> childList;
         int numParent;
 
         Node() {
-            adjList = new ArrayList<>();
-            childList = new ArrayList<>();
+            adjList = new LinkedList<>();
+            childList = new LinkedList<>();
 
         }
     }
@@ -50,21 +51,16 @@ public class Solution5 {
         }
 
         Queue<Integer> q = new LinkedList<>();
-        q.offer(0);
+        if (nodes[0].numParent == 0) q.offer(0);
 
-        visited = new boolean[n];
+        int count = 0;
         while (!q.isEmpty()) {
             int next = q.poll();
-            visited[next] = true;
             for (int child : nodes[next].childList) {
-                if (!visited[child]) {
-                    if (--nodes[child].numParent == 0) q.offer(child);
-                }
+                if (--nodes[child].numParent == 0) q.offer(child);
             }
+            count++;
         }
-        for (Node node : nodes) {
-            if (node.numParent > 0) return false;
-        }
-        return true;
+        return count == n;
     }
 }
