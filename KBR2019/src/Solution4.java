@@ -9,7 +9,7 @@ public class Solution4 {
         long time = 0, elapsedTime = 0;
         long foodEaten = 0;
         int food;
-        while (true) {
+        while (!foodLeft.isEmpty()) {
             food = foodLeft.peek();
             elapsedTime = ((food - foodEaten) * foodLeft.size());
             if (time + elapsedTime < k) {
@@ -20,6 +20,7 @@ public class Solution4 {
                 break;
             }
         }
+        if(foodLeft.isEmpty()) return -1;
         k -= time;
         foodEaten += (k / foodLeft.size());
         k %= foodLeft.size();
