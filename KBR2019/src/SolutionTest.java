@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 2;
+    static final int SOLUTION_NUMBER = 4;
 
     static void print(Object o) {
 
@@ -29,6 +29,12 @@ public class SolutionTest {
                 Solution2 s = new Solution2();
                 int[][] stages = {{2, 1, 2, 6, 2, 4, 3, 3}};
                 for (int t = 0; t < N.length; t++) print(s.solution(N[t], stages[t]));
+            }
+            case 4: {
+                int[][] food_times = {{3, 1, 2}};
+                long[] k = {5};
+                Solution4 s = new Solution4();
+                for (int t = 0; t < food_times.length; t++) print(s.solution(food_times[t], k[t]));
             }
             break;
             default:
