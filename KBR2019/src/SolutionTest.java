@@ -9,7 +9,7 @@ public class SolutionTest {
         String s;
         if (o.getClass().isArray()) {
             if (o instanceof int[]) s = Arrays.toString((int[]) o);
-            else s = Arrays.toString((Object[]) o);
+            else s = Arrays.deepToString((Object[]) o);
         } else {
             s = o.toString();
         }
@@ -55,7 +55,7 @@ public class SolutionTest {
                 int[][][] nodeinfo = {{{5, 3}, {11, 5}, {13, 3}, {3, 5}, {6, 1}, {1, 3}, {8, 6}, {7, 2}, {2, 2}}};
                 Solution5 s = new Solution5();
                 for (int t = 0; t < nodeinfo.length; t++) {
-                    for (int[] arr : s.solution(nodeinfo[t])) print(arr);
+                    print(s.solution(nodeinfo[t]));
                 }
             }
             break;
