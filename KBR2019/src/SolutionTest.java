@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 3;
+    static final int SOLUTION_NUMBER = 5;
 
     static void print(Object o) {
 
@@ -51,6 +51,15 @@ public class SolutionTest {
                 for (int t = 0; t < food_times.length; t++) print(s.solution(food_times[t], k[t]));
             }
             break;
+            case 5: {
+                int[][][] nodeinfo = {{{5, 3}, {11, 5}, {13, 3}, {3, 5}, {6, 1}, {1, 3}, {8, 6}, {7, 2}, {2, 2}}};
+                Solution5 s = new Solution5();
+                for (int t = 0; t < nodeinfo.length; t++) {
+                    for (int[] arr : s.solution(nodeinfo[t])) print(arr);
+                }
+            }
+            break;
+
             default:
                 throw new IllegalArgumentException("No such solution number " + SOLUTION_NUMBER);
         }
