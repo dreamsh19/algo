@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Solution2 {
 
@@ -8,7 +8,7 @@ public class Solution2 {
 
         Stage(int id, int failNum, int totalNum) {
             this.id = id;
-            this.failRate = totalNum == 0 ? 0 : (double) failNum / totalNum;
+            failRate = totalNum == 0 ? 0 : (double) failNum / totalNum;
         }
 
         @Override
@@ -18,35 +18,21 @@ public class Solution2 {
             if (diff < 0) return -1;
             return id - o.id;
         }
-
-        @Override
-        public String toString() {
-            return "Stage{" +
-                    "id=" + id +
-                    ", failRate=" + failRate +
-                    '}';
-        }
     }
 
     public int[] solution(int N, int[] stages) {
         int[] count = new int[N + 2];
-        for (int stage : stages) {
-            count[stage]++;
-        }
+        for (int stage : stages) count[stage]++;
 
-        Stage[] stageList = new Stage[N + 1];
-
-        stageList[0] = new Stage(0, -1, 1);
+        ArrayList<Stage> stageList = new ArrayList<>(N);
         int totalNum = count[N + 1];
         for (int i = N; i > 0; i--) {
-            totalNum += count[i];
-            stageList[i] = new Stage(i, count[i], totalNum);
+            stageList.add(new Stage(i, count[i], totalNum += count[i]));
         }
-        Arrays.sort(stageList);
+        stageList.sort(null);
         int[] result = new int[N];
-        for (int i = 0; i < N; i++) {
-            result[i] = stageList[i].id;
-        }
+        int idx = 0;
+        for (Stage stage : stageList) result[idx++] = stage.id;
 
         return result;
     }

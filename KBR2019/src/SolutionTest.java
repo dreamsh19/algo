@@ -30,13 +30,14 @@ public class SolutionTest {
             }
             break;
             case 2: {
-                int[] N = {5};
+                int[] N = {5,3};
                 Solution2 s = new Solution2();
-                int[][] stages = {{2, 1, 2, 6, 2, 4, 3, 3}};
+                int[][] stages = {{2, 1, 2, 6, 2, 4, 3, 3},{2}};
                 for (int t = 0; t < N.length; t++) print(s.solution(N[t], stages[t]));
             }
+            break;
             case 3: {
-                String[][][] relation = {{
+                String[][][] relation = {   {
                         {"100", "ryan", "music", "2"},
                         {"200", "apeach", "math", "2"},
                         {"300", "tube", "computer", "3"},
