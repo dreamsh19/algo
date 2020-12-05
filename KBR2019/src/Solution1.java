@@ -9,14 +9,14 @@ public class Solution1 {
         String uid;
         String action;
 
-        Message(String action, String uid) {
-            this.action = action;
+        Message(String uid, String action) {
             this.uid = uid;
+            this.action = action;
         }
 
         @Override
         public String toString() {
-            return uid2nick.get(uid) + (action.equals("Enter") ? "님이 들어왔습니다." : "님이 나갔습니다.");
+            return uid2nick.get(uid) + "님이 " + (action.equals("Enter") ? "들어왔습니다." : "나갔습니다.");
         }
     }
 
@@ -29,12 +29,12 @@ public class Solution1 {
             String uid = tokens[1];
 
             if (action.equals("Leave")) {
-                messages.add(new Message(action, uid));
+                messages.add(new Message(uid,action));
             } else {
                 String nickname = tokens[2];
                 uid2nick.put(uid, nickname);
                 if (action.equals("Enter")) {
-                    messages.add(new Message(action, uid));
+                    messages.add(new Message(uid, action));
                 }
             }
         }
