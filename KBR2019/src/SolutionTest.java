@@ -1,8 +1,7 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class SolutionTest {
-
-    static final int SOLUTION_NUMBER = 7;
 
     static void print(Object o) {
 
@@ -17,6 +16,12 @@ public class SolutionTest {
     }
 
     public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("SOLUTION NUMBER TO TEST : ");
+        int SOLUTION_NUMBER = sc.nextInt();
+        sc.close();
+
         switch (SOLUTION_NUMBER) {
             case 1: {
                 String[][] records = {{"Enter uid1234 Muzi", "Enter uid4567 Prodo", "Leave uid1234", "Enter uid1234 Prodo", "Change uid4567 Ryan"}};
