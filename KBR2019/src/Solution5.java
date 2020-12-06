@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -17,6 +16,48 @@ public class Solution5 {
             this.height = height;
         }
 
+        void insertNode(Node node) {
+            if (this.compareTo(node) > 0) {
+                if (left == null) {
+                    this.left = node;
+                } else {
+                    left.insertNode(node);
+                }
+            } else {
+                if (right == null) {
+                    this.right = node;
+                } else {
+                    right.insertNode(node);
+                }
+            }
+        }
+
+        ArrayList<Integer> preOrder() {
+            ArrayList<Integer> result = new ArrayList<>();
+            preOrder(result, this);
+            return result;
+        }
+
+        void preOrder(ArrayList<Integer> result, Node root) {
+            if (root == null) return;
+            result.add(root.id);
+            preOrder(result, root.left);
+            preOrder(result, root.right);
+        }
+
+        ArrayList<Integer> postOrder() {
+            ArrayList<Integer> result = new ArrayList<>();
+            postOrder(result, this);
+            return result;
+        }
+
+        void postOrder(ArrayList<Integer> result, Node root) {
+            if (root == null) return;
+            postOrder(result, root.left);
+            postOrder(result, root.right);
+            result.add(root.id);
+        }
+
         @Override
         public int compareTo(Node o) {
             return value - o.value;
@@ -32,45 +73,8 @@ public class Solution5 {
         }
     }
 
-    void insertNode(Node root, Node node) {
-        if (root.compareTo(node) > 0) {
-            if (root.left == null) {
-                root.left = node;
-                return;
-            } else {
-                insertNode(root.left, node);
-            }
-        } else {
-            if (root.right == null) {
-                root.right = node;
-                return;
-            } else {
-                insertNode(root.right, node);
-            }
-        }
-
-    }
-
-    ArrayList<Node> preorder, postorder;
-
-    void preorder(Node root) {
-        if (root == null) return;
-        preorder.add(root);
-        preorder(root.left);
-        preorder(root.right);
-    }
-
-    void postorder(Node root) {
-        if (root == null) return;
-        postorder(root.left);
-        postorder(root.right);
-        postorder.add(root);
-
-    }
-
-
     public int[][] solution(int[][] nodeinfo) {
-        PriorityQueue<Node> pq = new PriorityQueue<>((Comparator.comparingInt(o -> -o.height)));
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(o -> -o.height));
         int n = nodeinfo.length;
         for (int i = 0; i < n; i++) {
             int[] node = nodeinfo[i];
@@ -79,25 +83,13 @@ public class Solution5 {
         Node root = pq.remove();
 
         while (!pq.isEmpty()) {
-            insertNode(root, pq.remove());
+            root.insertNode(pq.remove());
         }
-
-
-        preorder = new ArrayList<>();
-        postorder = new ArrayList<>();
-
-        preorder(root);
-        postorder(root);
 
         int[][] answer = new int[2][n];
-        int idx = 0;
-        for (Node node : preorder) {
-            answer[0][idx++] = node.id;
-        }
-        idx = 0;
-        for (Node node : postorder) {
-            answer[1][idx++] = node.id;
-        }
+        int idx0 = 0, idx1 = 0;
+        for (int id : root.preOrder()) answer[0][idx0++] = id;
+        for (int id : root.postOrder()) answer[1][idx1++] = id;
 
         return answer;
     }
