@@ -5,36 +5,39 @@ public class Solution3 {
     String[][] relation;
     HashSet<int[]> candidateKeys;
 
-    class KeySet {
-        int n;
+    class ValueList {
         String[] values;
+        int curIdx;
 
-        KeySet(String[] values) {
-            n = values.length;
-            this.values = new String[n];
-            System.arraycopy(values, 0, this.values, 0, n);
-//            this.values = values;
+        ValueList(int n) {
+            values = new String[n];
+            curIdx = 0;
+        }
+
+        ValueList(String[] values) {
+            this.values = values.clone();
+        }
+
+        void add(String value) {
+            values[curIdx++] = value;
         }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            KeySet keySet = (KeySet) o;
-            return n == keySet.n &&
-                    Arrays.equals(values, keySet.values);
+            ValueList valueList = (ValueList) o;
+            return Arrays.equals(values, valueList.values);
         }
 
         @Override
         public int hashCode() {
-            int result = Objects.hash(n);
-            result = 31 * result + Arrays.hashCode(values);
-            return result;
+            return Arrays.hashCode(values);
         }
     }
 
     boolean isKey(int[] columnList) {
-        HashSet<KeySet> set = new HashSet<>();
+        HashSet<ValueList> set = new HashSet<>();
         int n = columnList.length;
         String[] values = new String[n];
         for (String[] row : relation) {
@@ -42,7 +45,7 @@ public class Solution3 {
             for (int c : columnList) {
                 values[i++] = row[c];
             }
-            set.add(new KeySet(values));
+            set.add(new ValueList(values));
         }
         return set.size() == R;
     }
@@ -101,45 +104,96 @@ public class Solution3 {
         return candidateKeys.size();
     }
 
-    HashSet<Integer> bitMaskSet;
+    HashSet<BitMask> bitMaskSet;
+
+    class BitMask implements Cloneable {
+        int value;
+        int size;
+
+        BitMask(int value, int size) {
+            this.value = value;
+            this.size = size;
+        }
+
+        boolean contains(BitMask o) {
+            return (o.value & value) == o.value;
+        }
+
+        boolean isOverflow() {
+            return value >= (1 << size);
+        }
+
+        void inc() {
+            value++;
+        }
+
+        boolean isMinimal() {
+            for (BitMask bitmask : bitMaskSet) {
+                if (this.contains(bitmask)) return false;
+            }
+            return true;
+        }
+
+        ArrayList<Integer> toList() {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                if ((value & (1 << i)) != 0) list.add(i);
+            }
+            return list;
+        }
+
+        boolean isKey() {
+            ArrayList<Integer> colList = toList();
+            HashSet<ValueList> set = new HashSet<>();
+            for (String[] row : relation) {
+                ValueList valueList = new ValueList(colList.size());
+                for (int col : colList) {
+                    valueList.add(row[col]);
+                }
+                set.add(valueList);
+            }
+            return set.size() == R;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            BitMask bitMask = (BitMask) o;
+            return value == bitMask.value &&
+                    size == bitMask.size;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(value, size);
+        }
+
+        @Override
+        public Object clone() {
+            try {
+                return super.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
 
     public int solution_(String[][] relation) {
         this.relation = relation;
         R = relation.length;
         C = relation[0].length;
-        int bitMaskMax = 1 << C;
         bitMaskSet = new HashSet<>();
-        for (int bitMask = 0; bitMask < bitMaskMax; bitMask++) {
-            if (isMinimal(bitMask) && isKey(bitMask)) {
-                bitMaskSet.add(bitMask);
+
+        for (BitMask bitmask = new BitMask(1, C); !bitmask.isOverflow(); bitmask.inc()) {
+            if (bitmask.isMinimal() && bitmask.isKey()) {
+                bitMaskSet.add((BitMask) bitmask.clone());
             }
         }
+
         return bitMaskSet.size();
-    }
-
-    boolean isMinimal(int bitMask) {
-        for (int mask : bitMaskSet) {
-            if ((mask & bitMask) == mask) return false;
-        }
-        return true;
-    }
-
-    boolean isKey(int bitMask) {
-        ArrayList<Integer> colList = new ArrayList<>();
-        for (int col = 0; col < C; col++) {
-            if ((bitMask & (1 << col)) > 0) colList.add(col);
-        }
-        HashSet<KeySet> set = new HashSet<>();
-        for (String[] row : relation) {
-            String[] values = new String[colList.size()];
-            int j = 0;
-            for (int col : colList) {
-                values[j++] = row[col];
-            }
-
-            set.add(new KeySet(values));
-        }
-        return set.size()==R;
     }
 
 }
