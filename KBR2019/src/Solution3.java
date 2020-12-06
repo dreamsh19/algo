@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 public class Solution3 {
     int R, C;
@@ -102,4 +100,46 @@ public class Solution3 {
         }
         return candidateKeys.size();
     }
+
+    HashSet<Integer> bitMaskSet;
+
+    public int solution_(String[][] relation) {
+        this.relation = relation;
+        R = relation.length;
+        C = relation[0].length;
+        int bitMaskMax = 1 << C;
+        bitMaskSet = new HashSet<>();
+        for (int bitMask = 0; bitMask < bitMaskMax; bitMask++) {
+            if (isMinimal(bitMask) && isKey(bitMask)) {
+                bitMaskSet.add(bitMask);
+            }
+        }
+        return bitMaskSet.size();
+    }
+
+    boolean isMinimal(int bitMask) {
+        for (int mask : bitMaskSet) {
+            if ((mask & bitMask) == mask) return false;
+        }
+        return true;
+    }
+
+    boolean isKey(int bitMask) {
+        ArrayList<Integer> colList = new ArrayList<>();
+        for (int col = 0; col < C; col++) {
+            if ((bitMask & (1 << col)) > 0) colList.add(col);
+        }
+        HashSet<KeySet> set = new HashSet<>();
+        for (String[] row : relation) {
+            String[] values = new String[colList.size()];
+            int j = 0;
+            for (int col : colList) {
+                values[j++] = row[col];
+            }
+
+            set.add(new KeySet(values));
+        }
+        return set.size()==R;
+    }
+
 }
