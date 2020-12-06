@@ -150,9 +150,9 @@ public class Solution3 {
                 for (int col : colList) {
                     valueList.add(row[col]);
                 }
-                set.add(valueList);
+                if(!set.add(valueList)) return false;
             }
-            return set.size() == R;
+            return true;
         }
 
         @Override
