@@ -46,7 +46,7 @@ public class SolutionTest {
                         {"600", "apeach", "music", "2"}}
                 };
                 Solution3 s = new Solution3();
-                for (int t = 0; t < relation.length; t++) print(s.solution_(relation[t]));
+                for (int t = 0; t < relation.length; t++) print(s.solution(relation[t]));
 
             }
             break;

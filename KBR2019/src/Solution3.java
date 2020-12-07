@@ -1,9 +1,12 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Solution3 {
     int R, C;
     String[][] relation;
-    HashSet<int[]> candidateKeys;
+    HashSet<HashSet<Integer>> candidateKeys;
 
     class ValueList {
         String[] values;
@@ -12,10 +15,6 @@ public class Solution3 {
         ValueList(int n) {
             values = new String[n];
             curIdx = 0;
-        }
-
-        ValueList(String[] values) {
-            this.values = values.clone();
         }
 
         void add(String value) {
@@ -36,57 +35,36 @@ public class Solution3 {
         }
     }
 
-    boolean isKey(int[] columnList) {
+    boolean isKey(HashSet<Integer> colList) {
         HashSet<ValueList> set = new HashSet<>();
-        int n = columnList.length;
-        String[] values = new String[n];
         for (String[] row : relation) {
-            int i = 0;
-            for (int c : columnList) {
-                values[i++] = row[c];
+            ValueList valueList = new ValueList(colList.size());
+            for (int col : colList) {
+                valueList.add(row[col]);
             }
-            set.add(new ValueList(values));
-        }
-        return set.size() == R;
-    }
-
-    boolean contains(int[] a1, int[] a2) {
-        int l1 = a1.length, l2 = a2.length;
-        if (l1 > l2) return false;
-
-        HashSet<Integer> set1 = new HashSet<>();
-        HashSet<Integer> set2 = new HashSet<>();
-        for (int a : a1) set1.add(a);
-        for (int a : a2) set2.add(a);
-
-        set1.removeAll(set2);
-
-        return set1.isEmpty();
-
-    }
-
-    boolean isCandidateKey(int[] columnList) {
-        for (int[] candidateKey : candidateKeys) {
-            if (contains(candidateKey, columnList)) return false;
+            if (!set.add(valueList)) return false;
         }
         return true;
     }
 
-    void combination(int[] arr, int[] result, int startIdx, int r) {
-        int n = arr.length;
-        int resultIdx = result.length - r;
-        if (n - startIdx == r) {
-            System.arraycopy(arr, startIdx, result, resultIdx, r);
-            r = 0;
+    boolean isMinimal(HashSet<Integer> colSet) {
+        for (HashSet<Integer> candidateKey : candidateKeys) {
+            if (colSet.containsAll(candidateKey)) return false;
         }
-        if (r == 0) {
-            if (isKey(result) && isCandidateKey(result)) candidateKeys.add(result.clone());
+        return true;
+    }
+
+    void combination(int n, HashSet<Integer> result, int level) {
+        if (level == n) {
+            if (isMinimal(result) && isKey(result))
+                candidateKeys.add((HashSet<Integer>) result.clone());
             return;
         }
-        result[resultIdx] = arr[startIdx];
-        combination(arr, result, startIdx + 1, r - 1);
-        combination(arr, result, startIdx + 1, r);
 
+        combination(n, result, level + 1);
+        result.add(level);
+        combination(n, result, level + 1);
+        result.remove(level);
     }
 
     public int solution(String[][] relation) {
@@ -95,12 +73,7 @@ public class Solution3 {
         C = relation[0].length;
         candidateKeys = new HashSet<>();
 
-        int[] arr = new int[C];
-        for (int i = 0; i < C; i++) arr[i] = i;
-
-        for (int r = 1; r <= C; r++) {
-            combination(arr, new int[r], 0, r);
-        }
+        combination(C, new HashSet<>(), 0);
         return candidateKeys.size();
     }
 
@@ -150,7 +123,7 @@ public class Solution3 {
                 for (int col : colList) {
                     valueList.add(row[col]);
                 }
-                if(!set.add(valueList)) return false;
+                if (!set.add(valueList)) return false;
             }
             return true;
         }
@@ -178,6 +151,7 @@ public class Solution3 {
                 return null;
             }
         }
+
     }
 
 
