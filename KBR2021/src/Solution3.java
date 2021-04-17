@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution3 {
 
@@ -15,10 +17,10 @@ public class Solution3 {
                 for (String career : new String[]{"senior", "junior", "-"}) {
                     for (String soulFood : new String[]{"pizza", "chicken", "-"}) {
                         StringBuilder sb = new StringBuilder()
-                                .append(lang).append(DELIMITER)
-                                .append(jobType).append(DELIMITER)
-                                .append(career).append(DELIMITER)
-                                .append(soulFood);
+                                .append(lang.charAt(0))
+                                .append(jobType.charAt(0))
+                                .append(career.charAt(0))
+                                .append(soulFood.charAt(0));
                         map.put(sb.toString(), new ArrayList<>());
                     }
                 }
@@ -28,18 +30,41 @@ public class Solution3 {
         for (String infoUnit : info) {
             int idx = infoUnit.lastIndexOf(" ");
             String key = infoUnit.substring(0, idx);
+            String keyNew = "";
+            for (String token : key.split(" ")) {
+                keyNew += token.charAt(0);
+            }
             int score = Integer.parseInt(infoUnit.substring(idx + 1));
-            for (String mapKey : map.keySet()) {
-                if (contains(key, mapKey)) {
-                    ArrayList<Integer> arr = map.get(mapKey);
-                    arr.add(score);
-                    map.put(mapKey, arr);
+            for (char c0 : new char[]{keyNew.charAt(0), '-'}) {
+                for (char c1 : new char[]{keyNew.charAt(1), '-'}) {
+                    for (char c2 : new char[]{keyNew.charAt(2), '-'}) {
+                        for (char c3 : new char[]{keyNew.charAt(3), '-'}) {
+                            String s = new StringBuilder()
+                                    .append(c0)
+                                    .append(c1)
+                                    .append(c2)
+                                    .append(c3)
+                                    .toString();
+                            ArrayList<Integer> arr = map.get(s);
+                            arr.add(score);
+                            map.put(s, arr);
+                        }
+                    }
                 }
             }
         }
 
 
-
+        HashMap<String, int[]> mapNew = new HashMap<>();
+        for (Map.Entry<String, ArrayList<Integer>> entry : map.entrySet()) {
+            int[] newArr = new int[entry.getValue().size()];
+            int i = 0;
+            for (int a : entry.getValue()) {
+                newArr[i++] = a;
+            }
+            Arrays.sort(newArr);
+            mapNew.put(entry.getKey(), newArr);
+        }
 
         int len = query.length;
         int[] answer = new int[len];
@@ -48,29 +73,29 @@ public class Solution3 {
             String q = query[i].replaceAll(" and ", " ");
             int idx = q.lastIndexOf(" ");
             String key = q.substring(0, idx);
-            int score = Integer.parseInt(q.substring(idx + 1));
-            ArrayList<Integer> arr = map.get(key);
-
-            int num = 0;
-            for (int a : arr) {
-                if (a >= score) num++;
+            String keyNew = "";
+            for (String token : key.split(" ")) {
+                keyNew += token.charAt(0);
             }
-            answer[i] = num;
+            int score = Integer.parseInt(q.substring(idx + 1));
+            int[] arr = mapNew.get(keyNew);
+
+            int ret = Arrays.binarySearch(arr, score);
+
+            if (ret >= 0) {
+                while (ret >= 0 && arr[ret] == score) {
+                    ret--;
+                }
+                ret = arr.length - 1 - ret;
+            } else {
+                ret = arr.length + ret + 1;
+            }
+
+            answer[i] = ret;
         }
 
 
         return answer;
     }
 
-    public boolean contains(String s1, String s2) {
-        String[] tokens1 = s1.split(DELIMITER);
-        String[] tokens2 = s2.split(DELIMITER);
-        for (int i = 0; i < 4; i++) {
-            if (!tokens2[i].equals("-")) {
-                if (!tokens2[i].equals(tokens1[i])) return false;
-            }
-        }
-        return true;
-    }
-    
 }
