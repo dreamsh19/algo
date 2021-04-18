@@ -61,7 +61,7 @@ public class SolutionTest {
             };
             Solution4 s = new Solution4();
             for (int i = 0; i < T; i++) {
-                print(s.solution_(ns[i], ss[i], as[i], bs[i], faress[i]));
+                print(s.solution__(ns[i], ss[i], as[i], bs[i], faress[i]));
             }
         }
     }

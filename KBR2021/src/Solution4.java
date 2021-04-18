@@ -11,6 +11,19 @@ public class Solution4 {
     HashMap<Integer, Integer>[] graph;
     int aDest, bDest;
 
+
+    void loadGraph(int n, int[][] fares) {
+        graph = new HashMap[n + 1];
+        for (int i = 1; i <= n; i++) graph[i] = new HashMap<>();
+        for (int[] fare : fares) {
+            int from = fare[0];
+            int to = fare[1];
+            int dist = fare[2];
+            graph[from].put(to, dist);
+            graph[to].put(from, dist);
+        }
+    }
+
     public int solution(int n, int s, int a, int b, int[][] fares) {
         int answer = 0;
 
@@ -18,22 +31,13 @@ public class Solution4 {
         aDest = a;
         bDest = b;
 
-        graph = new HashMap[n + 1];
-        for (int i = 1; i <= n; i++) graph[i] = new HashMap<>();
-
+        loadGraph(n, fares);
 
         dist = new int[n + 1][n + 1];
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 dist[i][j] = Integer.MAX_VALUE;
             }
-        }
-        for (int[] fare : fares) {
-            int from = fare[0];
-            int to = fare[1];
-            int dist = fare[2];
-            graph[from].put(to, dist);
-            graph[to].put(from, dist);
         }
 
         PriorityQueue<State> bfsQ = new PriorityQueue<>();
@@ -124,6 +128,75 @@ public class Solution4 {
         return answer;
 
     }
+
+    public int solution__(int n, int s, int a, int b, int[][] fares) {
+
+        int[] distS = new int[n + 1];
+        int[] distA = new int[n + 1];
+        int[] distB = new int[n + 1];
+        for (int i = 1; i <= n ; i++) {
+            distA[i] = MAX_DIST;
+            distB[i] = MAX_DIST;
+            distS[i] = MAX_DIST;
+        }
+        loadGraph(n, fares);
+
+        bfs(distS, s);
+        bfs(distA, a);
+        bfs(distB, b);
+
+        int answer = Integer.MAX_VALUE;
+        for (int k = 1; k <= n; k++) {
+            answer = Math.min(answer, distS[k] + distA[k] + distB[k]);
+        }
+        return answer;
+
+    }
+
+    void bfs(int[] dist, int start) {
+
+        PriorityQueue<Dist> bfsQ = new PriorityQueue<>();
+        bfsQ.offer(new Dist(start, 0));
+        dist[start] = 0;
+
+        while (!bfsQ.isEmpty()) {
+            Dist _dist = bfsQ.remove();
+            int node = _dist.node;
+            int d = _dist.dist;
+
+            if (dist[node] < d) continue;
+
+            for (Map.Entry<Integer, Integer> e : graph[node].entrySet()) {
+                int nodeNext = e.getKey();
+                int distNew = d + e.getValue();
+
+                if (distNew < dist[nodeNext]) {
+                    dist[nodeNext] = distNew;
+                    bfsQ.add(new Dist(nodeNext, distNew));
+                }
+            }
+
+        }
+
+
+    }
+
+    class Dist implements Comparable<Dist> {
+        int node;
+        int dist;
+
+        Dist(int node, int dist) {
+            this.node = node;
+            this.dist = dist;
+        }
+
+
+        @Override
+        public int compareTo(Dist o) {
+            return this.dist - o.dist;
+        }
+    }
+
 
     class State implements Comparable<State> {
         int a, b;
