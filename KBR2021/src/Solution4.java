@@ -5,10 +5,10 @@ import java.util.PriorityQueue;
 public class Solution4 {
 
 
+    private static final int MAX_DIST = 100000 * 200;
+
     int[][] dist;
-
     HashMap<Integer, Integer>[] graph;
-
     int aDest, bDest;
 
     public int solution(int n, int s, int a, int b, int[][] fares) {
@@ -89,6 +89,41 @@ public class Solution4 {
         return answer;
     }
 
+    public int solution_(int n, int s, int a, int b, int[][] fares) {
+
+        dist = new int[n + 1][n + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                dist[i][j] = MAX_DIST;
+            }
+        }
+        for (int i = 1; i <= n; i++) {
+            dist[i][i] = 0;
+        }
+
+        for (int[] fare : fares) {
+            int from = fare[0];
+            int to = fare[1];
+            int cost = fare[2];
+            dist[from][to] = cost;
+            dist[to][from] = cost;
+        }
+
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+
+        int answer = Integer.MAX_VALUE;
+        for (int k = 1; k <= n; k++) {
+            answer = Math.min(dist[s][k] + dist[k][a] + dist[k][b], answer);
+        }
+        return answer;
+
+    }
 
     class State implements Comparable<State> {
         int a, b;

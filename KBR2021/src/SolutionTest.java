@@ -60,9 +60,8 @@ public class SolutionTest {
                     {{2, 6, 6}, {6, 3, 7}, {4, 6, 7}, {6, 5, 11}, {2, 5, 12}, {5, 3, 20}, {2, 4, 8}, {4, 3, 9}}
             };
             Solution4 s = new Solution4();
-
             for (int i = 0; i < T; i++) {
-                print(s.solution(ns[i], ss[i], as[i], bs[i], faress[i]));
+                print(s.solution_(ns[i], ss[i], as[i], bs[i], faress[i]));
             }
         }
     }
