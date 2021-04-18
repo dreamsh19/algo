@@ -48,9 +48,14 @@ public class Solution4 {
             int aCurr = state.a;
             int bCurr = state.b;
 
+            if (dist[aCurr][bCurr] < state.dist) continue;
+
             if (aCurr == bCurr && state.canShare) {
-                for (int aTo : graph[aCurr].keySet()) {
-                    int distNew = state.dist + graph[aCurr].get(aTo);
+                for (Map.Entry<Integer, Integer> e : graph[aCurr].entrySet()) {
+                    int aTo = e.getKey();
+                    int aDist = e.getValue();
+
+                    int distNew = state.dist + aDist;
                     if (distNew < dist[aTo][aTo]) {
                         dist[aTo][aTo] = distNew;
                         bfsQ.add(new State(aTo, aTo, distNew, true));
@@ -63,16 +68,17 @@ public class Solution4 {
                 int distNew = state.dist + dDist;
                 if (distNew < dist[aTo][bCurr]) {
                     dist[aTo][bCurr] = distNew;
+                    dist[bCurr][aTo] = distNew;
                     bfsQ.add(new State(aTo, bCurr, distNew, false));
                 }
             }
-
             for (Map.Entry<Integer, Integer> e : graph[bCurr].entrySet()) {
                 int bTo = e.getKey();
                 int dDist = e.getValue();
                 int distNew = state.dist + dDist;
                 if (distNew < dist[aCurr][bTo]) {
                     dist[aCurr][bTo] = distNew;
+                    dist[bTo][aCurr] = distNew;
                     bfsQ.add(new State(aCurr, bTo, distNew, false));
                 }
             }
@@ -103,8 +109,9 @@ public class Solution4 {
         }
 
         public boolean isEnd() {
-            return a == aDest && b == bDest;
+            return (a == aDest && b == bDest) || (a == bDest && b == aDest);
         }
+
 
         @Override
         public String toString() {
