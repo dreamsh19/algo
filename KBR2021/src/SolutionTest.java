@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 4;
+    static final int SOLUTION_NUMBER = 6;
 
     static void print(Object o) {
         if (o instanceof int[]) {
@@ -62,6 +62,18 @@ public class SolutionTest {
             Solution4 s = new Solution4();
             for (int i = 0; i < T; i++) {
                 print(s.solution__(ns[i], ss[i], as[i], bs[i], faress[i]));
+            }
+        } else if (SOLUTION_NUMBER == 6) {
+
+            T = 2;
+            int[][][] boards = {{{1, 0, 0, 3}, {2, 0, 0, 0}, {0, 0, 0, 2}, {3, 0, 1, 0}},
+                    {{3, 0, 0, 2}, {0, 0, 1, 0}, {0, 1, 0, 0}, {2, 0, 0, 3}}
+            };
+            int[] rs = {1, 0};
+            int[] cs = {0, 1};
+            Solution6 s = new Solution6();
+            for (int i = 0; i < T; i++) {
+                print(s.solution(boards[i], rs[i], cs[i]));
             }
         }
     }
