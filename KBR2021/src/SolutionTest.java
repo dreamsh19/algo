@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SolutionTest {
 
-    static final int SOLUTION_NUMBER = 6;
+    static final int SOLUTION_NUMBER = 5;
 
     static void print(Object o) {
         if (o instanceof int[]) {
@@ -63,6 +63,21 @@ public class SolutionTest {
             for (int i = 0; i < T; i++) {
                 print(s.solution__(ns[i], ss[i], as[i], bs[i], faress[i]));
             }
+        } else if (SOLUTION_NUMBER == 5) {
+
+            T = 3;
+            String[] play_times = {"02:03:55", "99:59:59", "50:00:00"};
+            String[] adv_times = {"00:14:15", "25:00:00", "50:00:00"};
+            String[][] logss = {{"01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"},
+                    {"69:59:59-89:59:59", "01:00:00-21:00:00", "79:59:59-99:59:59", "11:00:00-31:00:00"},
+                    {"15:36:51-38:21:49", "10:14:18-15:36:51", "38:21:49-42:51:45"}
+
+            };
+            Solution5 s = new Solution5();
+            for (int i = 0; i < T; i++) {
+                print(s.solution(play_times[i], adv_times[i], logss[i]));
+            }
+            
         } else if (SOLUTION_NUMBER == 6) {
 
             T = 2;
