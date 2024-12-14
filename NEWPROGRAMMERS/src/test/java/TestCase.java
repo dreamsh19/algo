@@ -1,3 +1,5 @@
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.function.Function;
@@ -17,12 +19,13 @@ public class TestCase<IN, OUT> {
         return new TestCase<>(in, out);
     }
 
-    public static <I1, I2, O> TestCase<BiInput<I1, I2>, O> of(I1 i1, I2 i2, O out) {
-        return new TestCase<>(new BiInput<>(i1, i2), out);
+    public static <I1, I2, O> TestCase<Pair<I1, I2>, O> of(I1 i1, I2 i2, O out) {
+        return new TestCase<>(new Pair<>(i1, i2), out);
     }
 
-    public static <I1, I2, I3, O> TestCase<TriInput<I1, I2, I3>, O> of(I1 i1, I2 i2, I3 i3, O out) {
-        return new TestCase<>(new TriInput<>(i1, i2, i3), out);
+    public static <I1, I2, I3, O> TestCase<Triplet<I1, I2, I3>, O> of(I1 i1, I2 i2, I3 i3, O out) {
+
+        return new TestCase<>(new Triplet<>(i1, i2, i3), out);
     }
 
 
