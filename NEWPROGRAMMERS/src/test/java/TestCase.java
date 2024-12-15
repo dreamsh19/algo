@@ -6,8 +6,8 @@ import java.util.function.Function;
 
 public class TestCase<IN, OUT> {
 
-    IN in;
-    OUT out;
+    private final IN in;
+    private final OUT out;
 
     private TestCase(IN in, OUT out) {
         this.in = in;
@@ -29,7 +29,7 @@ public class TestCase<IN, OUT> {
     }
 
 
-    void runWith(Function<IN, OUT> solution) {
+    public void runWith(Function<IN, OUT> solution) {
         OUT actual = solution.apply(this.in);
         Assertions.assertEquals(actual, this.out);
     }
