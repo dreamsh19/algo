@@ -1,7 +1,7 @@
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-class Solution1Test extends AbstractSolutionTest<String[], String> {
+class Solution1Test extends AbstractUniSolutionTest<String[], String> {
 
     @Override
     Function<String[], String> solution() {
