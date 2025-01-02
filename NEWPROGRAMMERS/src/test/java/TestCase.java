@@ -29,8 +29,15 @@ public class TestCase<IN, OUT> {
 
     public void runWith(Function<IN, OUT> solution) {
         OUT actual = solution.apply(this.in);
-        Assertions.assertEquals(actual, this.out);
-    }
+        OUT expected = this.out;
 
+        if (actual instanceof Object[]) {
+            Assertions.assertArrayEquals((Object[]) expected, (Object[]) actual);
+        } else if (actual instanceof int[]) {
+            Assertions.assertArrayEquals((int[]) expected, (int[]) actual);
+        } else {
+            Assertions.assertEquals(expected, actual);
+        }
+    }
 }
 
